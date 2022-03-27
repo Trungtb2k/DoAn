@@ -1,0 +1,37 @@
+.show-hide-text {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .show-hide-text a {
+    order: 2;
+  }
+
+  .show-hide-text p {
+    position: relative;
+    overflow: hidden;
+    max-height: 70px;
+  }
+
+  .show-hide-text p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .show-less {
+    display: none;
+  }
+
+  .show-less:target {
+    display: block;
+  }
+
+  .show-less:target ~ p {
+    display: block;
+    max-height: 100%;
+  }
+
+  .show-less:target + a {
+    display: none;
+  }
