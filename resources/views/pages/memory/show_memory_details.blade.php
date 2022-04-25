@@ -3,7 +3,7 @@
 <main class="main">
         	<div class="page-header text-center" style="background-image: url(public/frontend/images/slide-3.png)">
         		<div class="container">
-        			<h1 class="page-title">Sản phẩm></h1>
+        			<h1 class="page-title">Sản phẩm</h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
@@ -38,19 +38,20 @@
 
                             <div class="products mb-3">
                                 <div class="row justify-content-center">
-                                    @foreach($product_256GB as $key => $value)
+                                    @foreach($product as $key => $value)
                                         <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                                             <div class="product product-7 text-center">
                                             <form>
                                             {{csrf_field()}}
                                                 <input type="hidden" value="{{$value->product_id}}" class="cart_product_id_{{$value->product_id}}">
+                                                <input type="hidden" value="{{$value->attr_id}}" class="cart_attr_id_{{$value->product_id}}">
                                                 <input type="hidden" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
                                                 <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
                                                 <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
                                                 <input type="hidden" value="1" class="cart_product_qty_{{$value->product_id}}">
                                                 <figure class="product-media">
-                                                    <a href="{{URL::to('/product-details/'.$value->product_id)}}">
-                                                        <img src="public/upload/product/{{$value->product_image}}" alt="Product image" class="product-image">
+                                                    <a href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">
+                                                        <img src="{{URL::to('public/upload/product/'.$value->product_image)}}" alt="Product image" class="product-image">
                                                     </a>
 
                                                     <div class="product-action-vertical">
@@ -59,7 +60,7 @@
                                                     </div><!-- End .product-action-vertical -->
 
                                                     <div class="product-action">
-                                                    <a type="button" data-id_product="{{$value->product_id}}" class="btn-product btn-cart add-to-cart" name="add-to-cart"><span>Thêm vào giỏ hàng</span></a>
+                                                        <a type="button" data-id_product="{{$value->product_id}}" class="btn-product btn-cart add-to-cart" name="add-to-cart"><span>Thêm vào giỏ hàng</span></a>
                                                     </div><!-- End .product-action -->
                                                 </figure><!-- End .product-media -->
 
@@ -141,15 +142,11 @@
 										<div class="widget-body">
 											<div class="filter-items">
 												<div class="filter-item">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <a href="{{URL::to('/64GB')}}"><label>64 GB</label></a>
+                                                @foreach($attr_name as $key => $attr_name)
+													<div class="custom-control custom-checkbox">
+                                                        <a href="{{URL::to('/memory/'.$attr_name->attr_id)}}"><label>{{$attr_name->attr_name}}</label></a>
 													</div><!-- End .custom-checkbox -->
-                                                    <div class="custom-control custom-checkbox">
-                                                        <a href="{{URL::to('/128GB')}}"><label>128 GB</label></a>
-													</div><!-- End .custom-checkbox -->
-                                                    <div class="custom-control custom-checkbox">
-                                                        <a href="{{URL::to('/256GB')}}"><label>256 GB</label></a>
-													</div><!-- End .custom-checkbox -->
+                                                @endforeach
 												</div><!-- End .filter-item -->
 											</div><!-- End .filter-items -->
 										</div><!-- End .widget-body -->

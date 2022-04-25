@@ -43,12 +43,18 @@ class CheckoutController extends Controller
         $subtotal =0;
         $discount = 0;
         foreach(Session::get('cart') as $key => $cart){
-            $subtotal = $cart['product_price']*$cart['product_qty'];
+            $subtotal += $cart['product_price']*$cart['product_qty'];
         }
 
-        foreach(Session::get('coupon') as $key => $cou){
-            $discount = ($cou['coupon_discount']*$subtotal)/100;
+        $cp = Session::get('coupon');
+        if($cp == true){
+            foreach(Session::get('coupon') as $key => $cou){
+                $discount = ($cou['coupon_discount']*$subtotal)/100;
+            }
+        }else{
+            $discount = 0;
         }
+
         $order_data = array();
         $order_data['shipping_id'] = Session::get('shipping_id');
         $order_data['payment_id'] = $payment_id;
@@ -63,6 +69,7 @@ class CheckoutController extends Controller
         foreach($content = Session::get('cart') as $key => $v_content){
             $order_d_data['order_id'] = $order_id;
             $order_d_data['product_id'] = $v_content['product_id'];
+            $order_d_data['attr_id'] = $v_content['attr_id'];
             $order_d_data['product_name'] = $v_content['product_name'];
             $order_d_data['product_price'] = $v_content['product_price'];
             $order_d_data['product_sales_quantity'] = $v_content['product_qty'];
@@ -96,7 +103,9 @@ class CheckoutController extends Controller
         ->join('tbl_order_details','tbl_order_details.order_id','=','tbl_order.order_id')
         ->select('tbl_order.*','tbl_order_details.*')
         ->where('tbl_order.order_id',$orderId)->get();
+
         $manager_order_by_Id = view('admin.view_order')->with('order_by_Id',$order_by_Id)->with('order_2',$order_2);
+
         return view('admin.admin_layout')->with('admin.view_order',$manager_order_by_Id);
     }
 

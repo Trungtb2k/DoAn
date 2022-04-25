@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ProductDetails;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 //FrontEnd
 Route::get('/',[HomeController::class,'index']);
 Route::get('/Home',[HomeController::class,'index']);
+Route::post('/search',[HomeController::class,'search']);
 
 //BackEnd
 Route::get('/Admin',[AdminController::class,'index']);
@@ -65,7 +67,18 @@ Route::post('/update-product/{product_id}', [ProductController::class,'update_pr
 Route::get('/unactive-product/{product_id}', [ProductController::class,'unactive_product']);
 Route::get('/active-product/{product_id}', [ProductController::class,'active_product']);
 
-Route::get('/product-details/{product_id}', [ProductController::class,'product_details']);
+Route::get('/product-details/{product_id}/{attr_id}', [ProductController::class,'product_details']);
+
+//Product Details
+Route::get('/add-product-details',[ProductDetails::class,'add_product_details']);
+Route::get('/list-product-details',[ProductDetails::class,'list_product_details']);
+Route::post('/save-product-details',[ProductDetails::class,'save_product_details']);
+Route::get('/edit-product-details/{product_id}/{attr_id}',[ProductDetails::class,'edit_product_details']);
+Route::get('/delete-product-details/{product_id}/{attr_id}',[ProductDetails::class,'delete_product_details']);
+Route::post('/update-product-details/{product_id}/{attr_id}', [ProductDetails::class,'update_product_details']);
+
+Route::get('/unactive-product-attr/{product_id}/{attr_id}', [ProductDetails::class,'unactive_product_attr']);
+Route::get('/active-product-attr/{product_id}/{attr_id}', [ProductDetails::class,'active_product_attr']);
 
 //Category product home
 Route::get('/category-product/{category_id}', [CategoryProduct::class,'show_category_details']);
@@ -73,9 +86,7 @@ Route::get('/brand/{brand_id}', [CategoryProduct::class,'show_brand_details']);
 Route::get('/shop', [CategoryProduct::class,'show_shop']);
 
 //Memory
-Route::get('/64GB', [CategoryProduct::class,'show_64GB']);
-Route::get('/128GB', [CategoryProduct::class,'show_128GB']);
-Route::get('/256GB', [CategoryProduct::class,'show_256GB']);
+Route::get('/memory/{attr_id}', [CategoryProduct::class,'show_memory_details']);
 
 //Gallery
 Route::get('add-gallery/{product_id}', [GalleryController::class,'add_gallery']);

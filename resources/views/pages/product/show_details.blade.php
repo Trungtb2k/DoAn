@@ -31,6 +31,7 @@
                                 <form>
                                     {{csrf_field()}}
                                         <input type="hidden" value="{{$value->product_id}}" class="cart_product_id_{{$value->product_id}}">
+                                        <input type="hidden" value="{{$value->attr_id}}" class="cart_attr_id_{{$value->product_id}}">
                                         <input type="hidden" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
                                         <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
                                         <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
@@ -52,17 +53,30 @@
                                         <p>{!!$value->product_content!!}</p>
                                     </div><!-- End .product-content -->
 
-                                    <div class="details-filter-row details-row-size">
-                                        <label for="size">Bộ nhớ trong:</label>
-                                        <p style="font-size: 130%;">{{$value->product_memory}}GB</p>
-                                    </div><!-- End .details-filter-row -->
+
+                                        <div class="details-filter-row details-row-size">
+                                        @foreach($attr_name as $key => $value1)
+                                        {{csrf_field()}}
+                                        <?php
+                                            if($value->attr_id == $value1->attr_id){
+                                        ?>
+                                            <a href="{{URL::to('/product-details/'.$value1->product_id.'/'.$value1->attr_id)}}" type="button" style="font-size: 14px;margin-left:10px;margin-top:10px;" data-id_product="{{$value1->attr_id}}" class="btn btn-outline-dark active">{{$value1->attr_name}}</a>
+                                        <?php
+                                            }else{
+                                        ?>
+                                            <a href="{{URL::to('/product-details/'.$value1->product_id.'/'.$value1->attr_id)}}" type="button" style="font-size: 14px;margin-left:10px;margin-top:10px;" data-id_product="{{$value1->attr_id}}" class="btn btn-outline-dark">{{$value1->attr_name}}</a>
+                                        <?php
+                                            }
+                                        ?>
+                                        @endforeach
+                                        </div><!-- End .details-filter-row -->
+
 
                                     <div class="product-details-action">
                                         <div class="details-action-col">
                                             <div class="product-details-quantity">
                                                 <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                             </div><!-- End .product-details-quantity -->
-
                                             <a type="button" data-id_product="{{$value->product_id}}" class="btn-product btn-cart add-to-cart" name="add-to-cart"><span>Thêm vào giỏ hàng</span></a>
                                         </div><!-- End .details-action-col -->
 
@@ -117,11 +131,12 @@
                                 </div><!-- End .product-desc-content -->
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-info-link">
-                                <div class="product-desc-content show-hide-text">
-                                <a  id="show-more" class="show-less" href="#show-less">Ẩn bớt<table></table></a>
-                                <a  id="show-less" class="show-more" href="#show-more">Xem thêm</a>
+                                <div class="product-desc-content content hideContent">
                                     <p>{!!$value->product_desc!!}</p>
                                 </div><!-- End .product-desc-content -->
+                                <div class="show-more">
+                                    <button type="button" class="btn btn-warning">Xem thêm</button>
+                                </div>
 
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
@@ -205,7 +220,7 @@
                                 <div class="product-body">
                                     <h3 class="product-title"><a href="product.html">{{($value->product_name)}}</a></h3><!-- End .product-title -->
                                     <div class="product-price">
-                                        {{number_format($value->product_price)}}
+                                        {{number_format($value->product_price)}}đ
                                     </div><!-- End .product-price -->
 
                                 </div><!-- End .product-body -->

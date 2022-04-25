@@ -27,6 +27,7 @@
 									<thead>
 										<tr>
 											<th>Sản phẩm</th>
+                                            <th>Bộ nhớ</th>
 											<th>Giá</th>
 											<th>Số lượng</th>
 											<th>Thành tiền</th>
@@ -54,10 +55,18 @@
 													</figure>
 
 													<h3 class="product-title">
-														<a href="#">{{$cart['product_name']}}</a>
+														<a href="{{URL::to('/product-details/'.$cart['product_id'].'/'.$cart['attr_id'])}}">{{$cart['product_name']}}</a>
 													</h3><!-- End .product-title -->
 												</div><!-- End .product -->
 											</td>
+                                            <?php
+
+                                                $mysqli = new mysqli('localhost','root','','molla');
+                                                $memory = "select attr_name from tbl_attr where attr_id = ".$cart['attr_id'];
+                                                $result = $mysqli->query($memory);
+                                                $row = $result->fetch_assoc();
+                                            ?>
+                                            <td>{{$row['attr_name']}}</td>
 											<td class="price-col">{{number_format($cart['product_price'])}}đ</td>
 											<td class="quantity-col">
                                                 <div class="cart-product-quantity">

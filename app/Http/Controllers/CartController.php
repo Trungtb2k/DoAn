@@ -35,16 +35,17 @@ class CartController extends Controller
         if($cart == true){
             $is_avaiable = 0;
             foreach($cart as $key => $val){
-                 if($val['product_id']==$data['cart_product_id']){
-                     $is_avaiable++;
+                if($val['product_id']==$data['cart_product_id'] && $val['attr_id']==$data['cart_attr_id']){
+                    $is_avaiable++;
+                }
+            }
 
-                 }
-             }
             if($is_avaiable == 0){
                 $cart[] = array(
                     'session_id' => $session_id,
                     'product_name' =>$data['cart_product_name'],
                     'product_id' =>$data['cart_product_id'],
+                    'attr_id' => $data['cart_attr_id'],
                     'product_image' =>$data['cart_product_image'],
                     'product_qty' =>$data['cart_product_qty'],
                     'product_price' =>$data['cart_product_price'],
@@ -56,6 +57,7 @@ class CartController extends Controller
                 'session_id' => $session_id,
                 'product_name' =>$data['cart_product_name'],
                 'product_id' =>$data['cart_product_id'],
+                'attr_id' => $data['cart_attr_id'],
                 'product_image' =>$data['cart_product_image'],
                 'product_qty' =>$data['cart_product_qty'],
                 'product_price' =>$data['cart_product_price'],
@@ -63,6 +65,7 @@ class CartController extends Controller
             Session::put('cart',$cart);
         }
         Session::save();
+
     }
 
     public function delete_product($session_id){

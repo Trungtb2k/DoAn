@@ -105,59 +105,53 @@ class CategoryProduct extends Controller
     public function show_shop(){
         $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
-        $list_product = DB::table('tbl_product')->where('product_status',0)->orderBy('product_desc','desc')->get();
+        $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
+        $list_product = DB::table('tbl_product')->where('product_status',0)
+        ->orderBy('product_desc','desc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('tbl_product_attr.product_attr_status',0)->get();
 
         return view('pages.category.show_category')->with('category',$cate_product)
-        ->with('brand',$brand_product)->with('list_product',$list_product);
+        ->with('brand',$brand_product)->with('list_product',$list_product)->with('attr_name',$attr_name);
     }
 
     public function show_category_details($category_id){
         $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
+        $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
         $category_by_id = DB::table('tbl_product')->join('tbl_category_product','tbl_product.category_id','=','tbl_category_product.category_id')
-        ->where('tbl_product.category_id',$category_id)->get();
+        ->where('tbl_product.category_id',$category_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('tbl_product_attr.product_attr_status',0)->get();
         $category_name = DB::table('tbl_category_product')->where('tbl_category_product.category_id',$category_id)->limit(1)->get();
 
         return view('pages.category.show_category_details')->with('category',$cate_product)
-        ->with('brand',$brand_product)->with('category_by_id',$category_by_id)->with('category_name',$category_name);
+        ->with('brand',$brand_product)->with('category_by_id',$category_by_id)
+        ->with('category_name',$category_name)->with('attr_name',$attr_name);
     }
 
     public function show_brand_details($brand_id){
         $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
+        $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
         $brand_by_id = DB::table('tbl_product')->join('tbl_brand','tbl_product.brand_id','=','tbl_brand.brand_id')
-        ->where('tbl_product.brand_id',$brand_id)->get();
+        ->where('tbl_product.brand_id',$brand_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('tbl_product_attr.product_attr_status',0)->get();
         $brand_name = DB::table('tbl_brand')->where('tbl_brand.brand_id',$brand_id)->limit(1)->get();
 
 
         return view('pages.brand.show_brand_details')->with('category',$cate_product)
-        ->with('brand',$brand_product)->with('brand_by_id',$brand_by_id)->with('brand_name',$brand_name);
+        ->with('brand',$brand_product)->with('brand_by_id',$brand_by_id)
+        ->with('brand_name',$brand_name)->with('attr_name',$attr_name);
     }
 
-    public function show_64GB(){
+    public function show_memory_details($attr_id){
         $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
-        $product_64GB = DB::table('tbl_product')->where('product_memory',64)->get() ;
+        $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
+        $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('attr_id',$attr_id)->get() ;
 
-        return view('pages.memory.show_64GB')->with('category',$cate_product)
-        ->with('brand',$brand_product)->with('product_64GB',$product_64GB);
+        return view('pages.memory.show_memory_details')->with('category',$cate_product)
+        ->with('brand',$brand_product)->with('product',$product)->with('attr_name',$attr_name);
     }
 
-    public function show_128GB(){
-        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
-        $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
-        $product_64GB = DB::table('tbl_product')->where('product_memory',128)->get() ;
-
-        return view('pages.memory.show_64GB')->with('category',$cate_product)
-        ->with('brand',$brand_product)->with('product_64GB',$product_64GB);
-    }
-
-    public function show_256GB(){
-        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
-        $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
-        $product_64GB = DB::table('tbl_product')->where('product_memory',256)->get() ;
-
-        return view('pages.memory.show_64GB')->with('category',$cate_product)
-        ->with('brand',$brand_product)->with('product_64GB',$product_64GB);
-    }
 }

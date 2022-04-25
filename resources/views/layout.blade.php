@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="{{asset('public/frontend/css/lightslider.css')}}">
     <link rel="stylesheet" href="{{asset('public/frontend/css/lightgallery.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/frontend/css/prettify.css')}}">
+    <link rel="stylesheet" href="{{asset('public/frontend/css/test_showmore.css')}}">
     <link rel="stylesheet" href="{{asset('public/frontend/css/sweetaleart.css')}}">
 </head>
 
@@ -117,10 +118,11 @@
                     <div class="header-right">
                         <div class="header-search">
                             <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
-                            <form action="#" method="get">
+                            <form action="{{URL::to('/search')}}" method="post">
+                                {{csrf_field()}}
                                 <div class="header-search-wrapper">
-                                    <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                                    <label for="q" class="sr-only">Tìm kiếm</label>
+                                    <input type="search" class="form-control" name="keywords" id="q" placeholder="Tìm kiếm..." required>
                                 </div><!-- End .header-search-wrapper -->
                             </form>
                         </div><!-- End .header-search -->
@@ -257,6 +259,7 @@
 
     <!-- Plugins JS File -->
     <script src="{{asset('public/frontend/js/jquery.min.js')}}"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="{{asset('public/frontend/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.hoverIntent.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.waypoints.min.js')}}"></script>
@@ -291,11 +294,30 @@
     </script>
 
     <script type="text/javascript">
+            $(".show-more button").on("click", function() {
+                var $this = $(this);
+                var $content = $this.parent().prev("div.content");
+                var linkText = $this.text().toUpperCase();
+
+                if(linkText === "XEM THÊM"){
+                    linkText = "Ẩn bớt";
+                    $content.switchClass("hideContent", "showContent", 400);
+                } else {
+                    linkText = "Xem thêm";
+                    $content.switchClass("showContent", "hideContent", 400);
+                };
+
+                $this.text(linkText);
+            });
+        </script>
+
+    <script type="text/javascript">
         $(document).ready(function(){
             $(".add-to-cart").click(function(){
                 var id = $(this).data('id_product');
                 var cart_product_id = $('.cart_product_id_'+id).val();
                 var cart_product_name = $('.cart_product_name_'+id).val();
+                var cart_attr_id = $('.cart_attr_id_'+id).val();
                 var cart_product_image = $('.cart_product_image_'+id).val();
                 var cart_product_price = $('.cart_product_price_'+id).val();
                 var cart_product_qty = $('.cart_product_qty_'+id).val();
@@ -303,7 +325,8 @@
                 $.ajax({
                     url:"{{url('/add-cart-ajax')}}",
                     method:"POST",
-                    data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image
+                    data:{cart_product_id:cart_product_id,cart_attr_id:cart_attr_id,
+                        cart_product_name:cart_product_name,cart_product_image:cart_product_image
                         ,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
                     success:function(data){
                         swal({
@@ -323,7 +346,7 @@
             });
         });
     </script>
-    
+
     <script type="text/javascript">
         $('.collapsed').on('change',function(){
             $('.collapsed').not(this).prop('checked',false);

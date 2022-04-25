@@ -77,7 +77,7 @@
 		                							<td>{{$cart['product_name']}}</a></td>
 		                							<td>{{number_format($cart['product_price']*$cart['product_qty'])}}đ</td>
 		                						</tr>
-
+                                                @endforeach
 		                						<tr class="summary-subtotal">
 		                							<td>Tổng tiền:</td>
 		                							<td>{{number_format($total)}}đ</td>
@@ -102,7 +102,7 @@
 		                							<td>{{number_format($total-$discount)}}đ</td>
 		                						</tr><!-- End .summary-total -->
 		                					</tbody>
-                                            @endforeach
+
 		                				</table><!-- End .table table-summary -->
 
                                         <form method="POST" action="{{URL::to('/save-checkout')}}">

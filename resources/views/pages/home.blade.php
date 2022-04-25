@@ -23,8 +23,8 @@
                                         </figure><!-- End .slide-image -->
 
                                         <div class="intro-content">
-                                            <h3 class="intro-subtitle text-black-50">Daily Deals</h3><!-- End .h3 intro-subtitle -->
-                                            <h1 class="intro-title text-dark">AirPods<br>Earphones</h1><!-- End .intro-title -->
+                                            <h3 class="intro-subtitle text-black-50">Ưu đãi</h3><!-- End .h3 intro-subtitle -->
+                                            <h1 class="intro-title text-dark">AirPods 2<p style="font-size: 20px;">2.999.000 đ</p></h1><!-- End .intro-title -->
 
                                             <a href="category.html" class="btn btn-outline-dark">
                                                 <span style="color: black">Xem ngay</span>
@@ -208,15 +208,15 @@
                             <form>
                             {{csrf_field()}}
                                 <input type="hidden" value="{{$value->product_id}}" class="cart_product_id_{{$value->product_id}}">
+                                <input type="hidden" value="{{$value->attr_id}}" class="cart_attr_id_{{$value->product_id}}">
                                 <input type="hidden" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
                                 <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
                                 <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
                                 <input type="hidden" value="1" class="cart_product_qty_{{$value->product_id}}">
                                 <figure class="product-media">
-                                    <a href="{{URL::to('/product-details/'.$value->product_id)}}">
+                                    <a href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">
                                         <img src="public/upload/product/{{$value->product_image}}" alt="Product image" class="product-image">
                                     </a>
-
                                     <div class="product-action-vertical">
                                         <a href="#" class="btn-product-icon btn-wishlist"><span>add to wishlist</span></a>
                                     </div><!-- End .product-action-vertical -->
@@ -286,32 +286,32 @@
                                         <form>
                                         {{csrf_field()}}
                                             <input type="hidden" value="{{$value->product_id}}" class="cart_product_id_{{$value->product_id}}">
+                                            <input type="hidden" value="{{$value->attr_id}}" class="cart_attr_id_{{$value->attr_id}}">
                                             <input type="hidden" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
                                             <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
                                             <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
                                             <input type="hidden" value="1" class="cart_product_qty_{{$value->product_id}}">
                                             <figure class="product-media">
-                                                <a href="{{URL::to('/product-details/'.$list->product_id)}}">
-                                                    <img src="public/upload/product/{{$list->product_image}}" alt="Product image" class="product-image">
-                                                </a>
-
-                                                <div class="product-action-vertical">
-                                                    <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                                                </div><!-- End .product-action-vertical -->
+                                            <a href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">
+                                                <img src="public/upload/product/{{$value->product_image}}" alt="Product image" class="product-image">
+                                            </a>
+                                            <div class="product-action-vertical">
+                                                <a href="#" class="btn-product-icon btn-wishlist"><span>add to wishlist</span></a>
+                                            </div><!-- End .product-action-vertical -->
                                             </figure><!-- End .product-media -->
 
                                             <div class="product-body">
-                                                <h3 class="product-title"><a href="product.html">{{($list->product_name)}}</a></h3><!-- End .product-title -->
+                                                <h3 class="product-title"><a href="product.html">{{($value->product_name)}}</a></h3><!-- End .product-title -->
                                                 <div class="product-price">
-                                                    {{number_format($list->product_price)}}đ
+                                                    {{number_format($value->product_price)}}đ
                                                 </div><!-- End .product-price -->
                                             </div><!-- End .product-body -->
                                             <div class="product-action">
                                                 <a type="button" data-id_product="{{$value->product_id}}" class="btn-product btn-cart add-to-cart" name="add-to-cart"><span>Thêm vào giỏ hàng</span></a>
                                             </div><!-- End .product-action -->
-                                        </form>
-                                        </div><!-- End .product -->
-                                    </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                                            </form>
+                                            </div><!-- End .product -->
+                                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
                                 @endforeach
                             </div><!-- End .row -->
                         </div><!-- End .products -->
@@ -319,7 +319,7 @@
 
                 </div><!-- End .tab-content -->
                 <div class="more-container text-center">
-                    <a href="#" class="btn btn-outline-darker btn-more"><span>Xem thêm</span><i class="icon-long-arrow-down"></i></a>
+                    <a href="{{URL::to('/shop')}}" class="btn btn-outline-darker btn-more"><span>Xem thêm</span><i class="icon-long-arrow-down"></i></a>
                 </div><!-- End .more-container -->
             </div><!-- End .container -->
 
