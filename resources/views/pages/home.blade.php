@@ -300,6 +300,7 @@
                                             </div><!-- End .product-action-vertical -->
                                             </figure><!-- End .product-media -->
 
+                                            <input type="hidden" name="qty" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                             <div class="product-body">
                                                 <h3 class="product-title"><a href="product.html">{{($value->product_name)}}</a></h3><!-- End .product-title -->
                                                 <div class="product-price">

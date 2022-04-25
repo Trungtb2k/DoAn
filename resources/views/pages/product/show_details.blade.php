@@ -35,7 +35,7 @@
                                         <input type="hidden" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
                                         <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
                                         <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
-                                        <input type="hidden" value="1" class="cart_product_qty_{{$value->product_id}}">
+
                                     <h1 class="product-title">{{($value->product_name)}}</h1><!-- End .product-title -->
 
                                     <div class="ratings-container">
@@ -75,7 +75,7 @@
                                     <div class="product-details-action">
                                         <div class="details-action-col">
                                             <div class="product-details-quantity">
-                                                <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                                <input type="number" name="qty" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                             </div><!-- End .product-details-quantity -->
                                             <a type="button" data-id_product="{{$value->product_id}}" class="btn-product btn-cart add-to-cart" name="add-to-cart"><span>Thêm vào giỏ hàng</span></a>
                                         </div><!-- End .details-action-col -->

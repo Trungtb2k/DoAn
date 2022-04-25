@@ -38,12 +38,19 @@
 									<tbody>
                                     @php
                                         $total = 0;
+                                        $cart1 = Session::get('cart');
+                                        $cou1 = Session::get('coupon');
+                                        if($cart1 == false){
+                                            $cart1 = [];
+                                        }
+                                        if($cou1 == false){
+                                            $cou1 = [];
+                                        }
                                     @endphp
-                                    @foreach(Session::get('cart') as $key => $cart)
+                                    @foreach($cart1 as $key => $cart)
                                         @php
-                                                $subtotal = $cart['product_price']*$cart['product_qty'];
+                                                $subtotal = ($cart['product_price'] * (int)$cart['product_qty']);
                                                 $total+=$subtotal;
-                                                $discount = 0;
                                         @endphp
 										<tr>
 											<td class="product-col">
@@ -105,8 +112,11 @@
 
                                             <tr class="summary-subtotal">
 	                							<td>Giảm giá:</td>
-                                                @if(Session::get('coupon'))
-                                                    @foreach(Session::get('coupon') as $key => $cou)
+                                                @php
+                                                    $discount = 0;
+                                                @endphp
+                                                @if($cou1)
+                                                    @foreach($cou1 as $key => $cou)
                                                         @php
                                                         $discount = ($total * $cou['coupon_discount']/100);
                                                         @endphp

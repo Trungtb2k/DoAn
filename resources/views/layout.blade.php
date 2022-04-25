@@ -320,7 +320,8 @@
                 var cart_attr_id = $('.cart_attr_id_'+id).val();
                 var cart_product_image = $('.cart_product_image_'+id).val();
                 var cart_product_price = $('.cart_product_price_'+id).val();
-                var cart_product_qty = $('.cart_product_qty_'+id).val();
+                //var cart_product_qty = $('.cart_product_qty_'+id).val();
+                var cart_product_qty = document.getElementById("qty").value;
                 var _token = $('input[name="_token"]').val();
                 $.ajax({
                     url:"{{url('/add-cart-ajax')}}",
@@ -352,7 +353,6 @@
             $('.collapsed').not(this).prop('checked',false);
         });
     </script>
-
 
 </body>
 
