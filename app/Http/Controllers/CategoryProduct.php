@@ -110,6 +110,27 @@ class CategoryProduct extends Controller
         ->orderBy('product_desc','desc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
         ->where('tbl_product_attr.product_attr_status',0)->get();
 
+        if(isset($_GET['sort_by'])){
+            $sort_by = $_GET['sort_by'];
+            if($sort_by=='kytu_za'){
+                $list_product = DB::table('tbl_product')->where('product_status',0)
+                ->orderBy('product_name','desc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->get();
+            }elseif($sort_by=='kytu_az'){
+                $list_product =  DB::table('tbl_product')->where('product_status',0)
+                ->orderBy('product_name','asc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->get();
+            }elseif($sort_by=='tang_dan'){
+                $list_product = DB::table('tbl_product')->where('product_status',0)
+                ->orderBy('product_price','asc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->get();
+            }elseif($sort_by=='giam_dan'){
+                $list_product = DB::table('tbl_product')->where('product_status',0)
+                ->orderBy('product_price','desc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->get();
+            }
+        }
+
         return view('pages.category.show_category')->with('category',$cate_product)
         ->with('brand',$brand_product)->with('list_product',$list_product)->with('attr_name',$attr_name);
     }

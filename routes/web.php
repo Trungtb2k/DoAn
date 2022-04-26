@@ -118,3 +118,5 @@ Route::post('/save-coupon', [CouponController::class,'save_coupon']);
 Route::get('/list-coupon', [CouponController::class,'list_coupon']);
 Route::get('/delete-coupon/{coupon_id}', [CouponController::class,'delete_coupon']);
 
+//Wishlist
+Route::get('/wishlist', [HomeController::class,'wishlist']);

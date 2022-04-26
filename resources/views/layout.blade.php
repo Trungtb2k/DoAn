@@ -72,7 +72,7 @@
                                 <a href="#">Links</a>
                                 <ul>
                                     <li class="sansserif"><a href="tel:#"><i class="icon-phone"></i>Số điện thoại: +0123 456 789</a></li>
-                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>Danh sách yêu thích <span>(3)</span></a></li>
+                                    <li><a href="{{URL::to('/wishlist')}}"><i class="icon-heart-o"></i>Danh sách yêu thích</a></li>
                                 </ul>
                             </li>
                         </ul><!-- End .top-menu -->
@@ -309,7 +309,7 @@
 
                 $this.text(linkText);
             });
-        </script>
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function(){
@@ -349,9 +349,74 @@
     </script>
 
     <script type="text/javascript">
+        function view(){
+            if(localStorage.getItem('data')!=null){
+                var data = JSON.parse(localStorage.getItem('data'));
+                for(i=0;i<data.length;i++){
+                    var product_id = data[i].product_id;
+                    var attr_id = data[i].attr_id;
+                    var name = data[i].name;
+                    var price = data[i].price;
+                    var image = data[i].image;
+                    var url = data[i].url;
+                    var valueImage = data[i].valueImage;
+                    $("#row_wishlist").append('<tr><td class="product-col"><div class="product"><input type="hidden" value="'+product_id+'" class="cart_product_id_'+product_id+'"><input type="hidden" id="wishlist_attrid'+product_id+'" value="'+attr_id+'" class="cart_attr_id_'+product_id+'"><input type="hidden" value="'+name+'" class="cart_product_name_'+product_id+'"><input type="hidden" value="'+valueImage+'" class="cart_product_image_'+product_id+'"><input type="hidden" value="'+price+'" class="cart_product_price_'+product_id+'"><input type="hidden" name="qty" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required><input type="hidden" value="1" class="cart_product_qty_'+product_id+'"><figure class="product-media"><a href="'+url+'"><img src="'+image+'" alt="Product image"></a></figure><h3 class="product-title"><a href="'+url+'">'+name+'</a></h3><!-- End .product-title --></div><!-- End .product --></td><td class="price-col">'+Intl.NumberFormat().format(price)+'đ</td><td class="action-col"><button data-id_product="'+product_id+'" class="btn btn-block btn-outline-primary-2 add-to-cart"><i class="icon-cart-plus"></i>Thêm vào giỏ hàng</button></td><td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td></tr>');
+                }
+            }
+        }
+        view();
+        function add_wishlist(clicked_id){
+            var product_id = clicked_id;
+            var attr_id = document.getElementById('wishlist_attrid'+product_id).value;
+            var name = document.getElementById('wishlist_productname'+product_id).value;
+            var price = document.getElementById('wishlist_productprice'+product_id).value;
+            var image = document.getElementById('wishlist_productimage'+product_id).src;
+            var url = document.getElementById('wishlist_producturl'+product_id).href;
+            var valueImage = document.getElementById('wishlist_valueimage'+product_id).value;
+            var newItem = {
+                'url':url,
+                'product_id':product_id,
+                'attr_id':attr_id,
+                'name':name,
+                'price':price,
+                'image':image,
+                'valueImage':valueImage,
+            }
+
+            if(localStorage.getItem('data')==null){
+                localStorage.setItem('data','[]');
+            }
+
+            var oldData = JSON.parse(localStorage.getItem('data'));
+
+            var matches = $.grep(oldData,function(obj){
+                return obj.product_id = product_id;
+            });
+
+            if(matches.length){
+                alert('Đã tồn tại trong danh mục yêu thích');
+            }else{
+                oldData.push(newItem);
+            }
+            localStorage.setItem('data',JSON.stringify(oldData));
+        }
+    </script>
+
+    <script type="text/javascript">
         $('.collapsed').on('change',function(){
             $('.collapsed').not(this).prop('checked',false);
         });
+    </script>
+
+        <!-- Sort -->
+    <script type="text/javascript">
+         $("#sort").on("change",function(){
+             var url  = $(this).val();
+             if(url){
+                 window.location = url;
+             }
+             return false;
+         });
     </script>
 
 </body>

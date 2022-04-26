@@ -38,4 +38,8 @@ class HomeController extends Controller
         return view('pages.product.search')->with('category',$cate_product)->with('attr_name',$attr_name)
         ->with('brand',$brand_product)->with('search_product',$search_product);
     }
+
+    public function wishlist(){
+        return view('pages.wishlist');
+    }
 }

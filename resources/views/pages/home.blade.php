@@ -208,22 +208,22 @@
                             <form>
                             {{csrf_field()}}
                                 <input type="hidden" value="{{$value->product_id}}" class="cart_product_id_{{$value->product_id}}">
-                                <input type="hidden" value="{{$value->attr_id}}" class="cart_attr_id_{{$value->product_id}}">
-                                <input type="hidden" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
-                                <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
-                                <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
+                                <input type="hidden" id="wishlist_attrid{{$value->product_id}}" value="{{$value->attr_id}}" class="cart_attr_id_{{$value->product_id}}">
+                                <input type="hidden" id="wishlist_productname{{$value->product_id}}" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
+                                <input type="hidden" id="wishlist_valueimage{{$value->product_id}}" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
+                                <input type="hidden" id="wishlist_productprice{{$value->product_id}}" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
                                 <input type="hidden" value="1" class="cart_product_qty_{{$value->product_id}}">
                                 <figure class="product-media">
-                                    <a href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">
-                                        <img src="public/upload/product/{{$value->product_image}}" alt="Product image" class="product-image">
+                                    <a id="wishlist_producturl{{$value->product_id}}" href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">
+                                        <img id="wishlist_productimage{{$value->product_id}}" src="public/upload/product/{{$value->product_image}}" alt="Product image" class="product-image">
                                     </a>
                                     <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist"><span>add to wishlist</span></a>
+                                        <button class="btn-product-icon btn-wishlist" id="{{$value->product_id}}" onclick="add_wishlist(this.id);"><span>Yêu thích</span></button>
                                     </div><!-- End .product-action-vertical -->
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">{{($value->product_name)}}</a></h3><!-- End .product-title -->
+                                    <h3 class="product-title"><a href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">{{($value->product_name)}}</a></h3><!-- End .product-title -->
                                     <div class="product-price">
                                         {{number_format($value->product_price)}}đ
                                     </div><!-- End .product-price -->
