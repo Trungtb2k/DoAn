@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\CategoryProduct;
 use App\Http\Controllers\GalleryController;
@@ -120,3 +121,14 @@ Route::get('/delete-coupon/{coupon_id}', [CouponController::class,'delete_coupon
 
 //Wishlist
 Route::get('/wishlist', [HomeController::class,'wishlist']);
+
+//Blog
+Route::get('/add-post', [BlogController::class,'add_post']);
+Route::post('/save-post', [BlogController::class,'save_post']);
+Route::get('/list-post', [BlogController::class,'list_post']);
+Route::get('/edit-post/{post_id}', [BlogController::class,'edit_post']);
+Route::get('/delete-post/{post_id}', [BlogController::class,'delete_post']);
+Route::post('/update-post/{post_id}', [BlogController::class,'update_post']);
+Route::get('/blog', [BlogController::class,'show_blog']);
+Route::get('/blog/{category_post_slug}', [BlogController::class,'category_post_slug']);
+Route::get('/blog-details/{post_meta_desc}', [BlogController::class,'blog_details']);

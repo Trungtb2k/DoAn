@@ -285,30 +285,30 @@
                                         <div class="product product-11 mt-v3 text-center">
                                         <form>
                                         {{csrf_field()}}
-                                            <input type="hidden" value="{{$value->product_id}}" class="cart_product_id_{{$value->product_id}}">
-                                            <input type="hidden" value="{{$value->attr_id}}" class="cart_attr_id_{{$value->attr_id}}">
-                                            <input type="hidden" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
-                                            <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
-                                            <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
-                                            <input type="hidden" value="1" class="cart_product_qty_{{$value->product_id}}">
+                                            <input type="hidden" value="{{$list->product_id}}" class="cart_product_id_{{$list->product_id}}">
+                                            <input type="hidden" value="{{$list->attr_id}}" class="cart_attr_id_{{$list->attr_id}}">
+                                            <input type="hidden" value="{{$list->product_name}}" class="cart_product_name_{{$list->product_id}}">
+                                            <input type="hidden" value="{{$list->product_image}}" class="cart_product_image_{{$list->product_id}}">
+                                            <input type="hidden" value="{{$list->product_price}}" class="cart_product_price_{{$list->product_id}}">
+                                            <input type="hidden" value="1" class="cart_product_qty_{{$list->product_id}}">
                                             <figure class="product-media">
-                                            <a href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">
-                                                <img src="public/upload/product/{{$value->product_image}}" alt="Product image" class="product-image">
+                                            <a href="{{URL::to('/product-details/'.$list->product_id.'/'.$list->attr_id)}}">
+                                                <img src="public/upload/product/{{$list->product_image}}" alt="Product image" class="product-image">
                                             </a>
                                             <div class="product-action-vertical">
-                                                <a href="#" class="btn-product-icon btn-wishlist"><span>add to wishlist</span></a>
+                                                <button class="btn-product-icon btn-wishlist" id="{{$list->product_id}}" onclick="add_wishlist(this.id);"><span>Yêu thích</span></button>
                                             </div><!-- End .product-action-vertical -->
                                             </figure><!-- End .product-media -->
 
                                             <input type="hidden" name="qty" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                             <div class="product-body">
-                                                <h3 class="product-title"><a href="product.html">{{($value->product_name)}}</a></h3><!-- End .product-title -->
+                                                <h3 class="product-title"><a href="{{URL::to('/product-details/'.$list->product_id.'/'.$list->attr_id)}}">{{($list->product_name)}}</a></h3><!-- End .product-title -->
                                                 <div class="product-price">
-                                                    {{number_format($value->product_price)}}đ
+                                                    {{number_format($list->product_price)}}đ
                                                 </div><!-- End .product-price -->
                                             </div><!-- End .product-body -->
                                             <div class="product-action">
-                                                <a type="button" data-id_product="{{$value->product_id}}" class="btn-product btn-cart add-to-cart" name="add-to-cart"><span>Thêm vào giỏ hàng</span></a>
+                                                <a type="button" data-id_product="{{$list->product_id}}" class="btn-product btn-cart add-to-cart" name="add-to-cart"><span>Thêm vào giỏ hàng</span></a>
                                             </div><!-- End .product-action -->
                                             </form>
                                             </div><!-- End .product -->
@@ -389,28 +389,31 @@
                                 }
                             }
                         }'>
-                        <article class="entry entry-display">
-                            <figure class="entry-media">
-                                <a href="single.html">
-                                    <img src="{{('public/frontend/images/post-1.jpg')}}" alt="image desc">
-                                </a>
-                            </figure><!-- End .entry-media -->
+                        @foreach($post as $ket => $post1)
+                            <article class="entry entry-display">
+                                <figure class="entry-media">
+                                    <a href="single.html">
+                                        <img  src="{{asset('public/upload/post/'.$post1->post_image)}}" alt="image desc">
+                                    </a>
+                                </figure><!-- End .entry-media -->
 
-                            <div class="entry-body pb-4 text-center">
-                                <div class="entry-meta">
-                                    <a href="#">Nov 22, 2018</a>, 0 Comments
-                                </div><!-- End .entry-meta -->
+                                <div class="entry-body pb-4 text-center">
+                                    <div class="entry-meta">
+                                        <a href="#">Nov 22, 2018</a>
+                                    </div><!-- End .entry-meta -->
 
-                                <h3 class="entry-title">
-                                    <a href="single.html">Sed adipiscing ornare.</a>
-                                </h3><!-- End .entry-title -->
+                                    <h3 class="entry-title">
+                                        <a href="{{URL::to('/blog-details/'.$post1->post_meta_desc)}}">{{$post1->post_title}}</a>
+                                    </h3><!-- End .entry-title -->
 
-                                <div class="entry-content">
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.<br>Pelletesque aliquet nibh necurna. </p>
-                                    <a href="single.html" class="read-more">Read More</a>
-                                </div><!-- End .entry-content -->
-                            </div><!-- End .entry-body -->
-                        </article><!-- End .entry -->
+                                    <div class="entry-content">
+                                        <p>{{$post1->post_desc}}</p>
+                                        <a href="{{URL::to('/blog-details/'.$post1->post_meta_desc)}}" class="read-more">Read More</a>
+                                    </div><!-- End .entry-content -->
+                                </div><!-- End .entry-body -->
+                            </article><!-- End .entry -->
+
+                        @endforeach
 
                     </div><!-- End .owl-carousel -->
                 </div><!-- container -->

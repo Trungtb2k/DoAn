@@ -101,7 +101,7 @@
                                     <a href="{{URL::to('/shop')}}" class="">Sản phẩm</a>
                                 </li>
                                 <li>
-                                    <a href="blog.html" class="">Blog</a>
+                                    <a href="{{URL::to('/blog')}}" class="">Blog</a>
                                 </li>
                                 <li>
                                     <a href="about.html" class="">Về chúng tôi</a>

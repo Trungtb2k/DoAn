@@ -21,8 +21,11 @@ class HomeController extends Controller
         ->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
         ->where('tbl_product_attr.product_attr_status',0)->limit(8)->get();
 
+        $post = DB::table('tbl_post')->orderBy('post_id','desc')->limit(3)->get();
+
         return view('pages.home')->with('category',$cate_product)->with('brand',$brand_product)
-        ->with('brand1',$brand_product)->with('list_product',$list_product)->with('list_product1',$list_product1);
+        ->with('brand1',$brand_product)->with('list_product',$list_product)
+        ->with('list_product1',$list_product1)->with('post',$post);
     }
 
     public function search(Request $request){

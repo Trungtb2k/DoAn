@@ -48,18 +48,18 @@
                                                 <form>
                                                 {{csrf_field()}}
                                                 <input type="hidden" value="{{$value->product_id}}" class="cart_product_id_{{$value->product_id}}">
-                                                <input type="hidden" value="{{$value->attr_id}}" class="cart_attr_id_{{$value->product_id}}">
-                                                <input type="hidden" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
-                                                <input type="hidden" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
-                                                <input type="hidden" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
+                                                <input type="hidden" id="wishlist_attrid{{$value->product_id}}" value="{{$value->attr_id}}" class="cart_attr_id_{{$value->product_id}}">
+                                                <input type="hidden" id="wishlist_productname{{$value->product_id}}" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
+                                                <input type="hidden" id="wishlist_valueimage{{$value->product_id}}" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
+                                                <input type="hidden" id="wishlist_productprice{{$value->product_id}}" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
                                                 <input type="hidden" value="1" class="cart_product_qty_{{$value->product_id}}">
                                                 <figure class="product-media">
-                                                    <a href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">
-                                                        <img src="public/upload/product/{{$value->product_image}}" alt="Product image" class="product-image">
+                                                    <a id="wishlist_producturl{{$value->product_id}}" href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">
+                                                        <img id="wishlist_productimage{{$value->product_id}}" src="public/upload/product/{{$value->product_image}}" alt="Product image" class="product-image">
                                                     </a>
 
                                                     <div class="product-action-vertical">
-                                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Yêu thích</span></a>
+                                                        <button class="btn-product-icon btn-wishlist" id="{{$value->product_id}}" onclick="add_wishlist(this.id);"><span>Yêu thích</span></button>
                                                         <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>So sánh</span></a>
                                                     </div><!-- End .product-action-vertical -->
 
@@ -68,6 +68,7 @@
                                                     </div><!-- End .product-action -->
                                                 </figure><!-- End .product-media -->
 
+                                                <input type="hidden" name="qty" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                                 <div class="product-body">
                                                     <h3 class="product-title">{{($value->product_name)}}</h3><!-- End .product-title -->
                                                     <div class="product-price">
