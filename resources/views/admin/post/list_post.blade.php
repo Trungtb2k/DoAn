@@ -55,11 +55,12 @@
                   <i class="fa fa-times text-danger text"></i>
                 </a>
             </td>
-          </tr>
+            </tr>
           @endforeach
         </tbody>
       </table>
     </div>
+    {{ $all_post->links() }}
 
   </div>
 </div>

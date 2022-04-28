@@ -28,7 +28,7 @@
                                 <div class="entry-body">
                                     <div class="entry-meta">
                                         <span class="entry-author">
-                                            by <a href="#">Admin</a>
+                                            Bởi <a href="#">Admin</a>
                                         </span>
                                         <span class="meta-separator">|</span>
                                         <a href="#">Nov 22, 2018</a>
@@ -39,8 +39,7 @@
                                     </h2><!-- End .entry-title -->
 
                                     <div class="entry-cats">
-                                        in <a href="#">Lifestyle</a>,
-                                        <a href="#">Shopping</a>
+                                        <a href="{{URL::to('/blog/'.$value->category_post_slug)}}">{{$value->category_post_name}}</a>
                                     </div><!-- End .entry-cats -->
 
                                     <div class="entry-content editor-content">
@@ -70,9 +69,10 @@
                             </article><!-- End .entry -->
                             @endforeach
 
-                            <div class="related-posts">
-                                <h3 class="title">Related Posts</h3><!-- End .title -->
 
+                            <div class="related-posts">
+                                <h3 class="title">Bài viết liên quan</h3><!-- End .title -->
+                                @foreach($post_release as $key => $release)
                                 <div class="owl-carousel owl-simple" data-toggle="owl"
                                     data-owl-options='{
                                         "nav": false,
@@ -93,112 +93,31 @@
                                     }'>
                                     <article class="entry entry-grid">
                                         <figure class="entry-media">
-                                            <a href="single.html">
-                                                <img src="assets/images/blog/grid/3cols/post-1.jpg" alt="image desc">
+                                            <a href="{{URL::to('/blog-details/'.$release->post_slug)}}">
+                                                <img src="{{asset('public/upload/post/'.$release->post_image)}}" alt="image desc">
                                             </a>
                                         </figure><!-- End .entry-media -->
 
                                         <div class="entry-body">
                                             <div class="entry-meta">
-                                                <a href="#">Nov 22, 2018</a>
+                                                <a href="#">Admin</a>
                                                 <span class="meta-separator">|</span>
-                                                <a href="#">2 Comments</a>
+                                                <a href="#">Nov 22, 2018</a>
                                             </div><!-- End .entry-meta -->
 
                                             <h2 class="entry-title">
-                                                <a href="single.html">Cras ornare tristique elit.</a>
+                                                <a href="{{URL::to('/blog-details/'.$release->post_slug)}}">{{$release->post_title}}</a>
                                             </h2><!-- End .entry-title -->
 
                                             <div class="entry-cats">
-                                                in <a href="#">Lifestyle</a>,
-                                                <a href="#">Shopping</a>
+                                                <a href="{{URL::to('/blog/'.$release->category_post_slug)}}">{{$release->category_post_name}}</a>
                                             </div><!-- End .entry-cats -->
                                         </div><!-- End .entry-body -->
                                     </article><!-- End .entry -->
 
                                 </div><!-- End .owl-carousel -->
+                                @endforeach
                             </div><!-- End .related-posts -->
-
-                            <div class="comments">
-                                <h3 class="title">3 Comments</h3><!-- End .title -->
-
-                                <ul>
-                                    <li>
-                                        <div class="comment">
-                                            <figure class="comment-media">
-                                                <a href="#">
-                                                    <img src="assets/images/blog/comments/1.jpg" alt="User name">
-                                                </a>
-                                            </figure>
-
-                                            <div class="comment-body">
-                                                <a href="#" class="comment-reply">Reply</a>
-                                                <div class="comment-user">
-                                                    <h4><a href="#">Jimmy Pearson</a></h4>
-                                                    <span class="comment-date">November 9, 2018 at 2:19 pm</span>
-                                                </div><!-- End .comment-user -->
-
-                                                <div class="comment-content">
-                                                    <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. </p>
-                                                </div><!-- End .comment-content -->
-                                            </div><!-- End .comment-body -->
-                                        </div><!-- End .comment -->
-
-                                        <ul>
-                                            <li>
-                                                <div class="comment">
-                                                    <figure class="comment-media">
-                                                        <a href="#">
-                                                            <img src="assets/images/blog/comments/2.jpg" alt="User name">
-                                                        </a>
-                                                    </figure>
-
-                                                    <div class="comment-body">
-                                                        <a href="#" class="comment-reply">Reply</a>
-                                                        <div class="comment-user">
-                                                            <h4><a href="#">Lena  Knight</a></h4>
-                                                            <span class="comment-date">November 9, 2018 at 2:19 pm</span>
-                                                        </div><!-- End .comment-user -->
-
-                                                        <div class="comment-content">
-                                                            <p>Morbi interdum mollis sapien. Sed ac risus.</p>
-                                                        </div><!-- End .comment-content -->
-                                                    </div><!-- End .comment-body -->
-                                                </div><!-- End .comment -->
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </div><!-- End .comments -->
-                            <div class="reply">
-                                <div class="heading">
-                                    <h3 class="title">Đánh giá</h3><!-- End .title -->
-                                    <p class="title-desc">Bạn cảm thấy bài viết này như thế nào?</p>
-                                </div><!-- End .heading -->
-
-                                <form action="#">
-                                    <label for="reply-message" class="sr-only">Comment</label>
-                                    <textarea name="reply-message" id="reply-message" cols="30" rows="4" class="form-control" required placeholder="Mời bạn chia sẻ thêm một số cảm nhận ... *"></textarea>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="reply-name" class="sr-only">Name</label>
-                                            <input type="text" class="form-control" id="reply-name" name="reply-name" required placeholder="Họ và tên *">
-                                        </div><!-- End .col-md-6 -->
-
-                                        <div class="col-md-6">
-                                            <label for="reply-email" class="sr-only">Email</label>
-                                            <input type="email" class="form-control" id="reply-email" name="reply-email" required placeholder="Email *">
-                                        </div><!-- End .col-md-6 -->
-                                    </div><!-- End .row -->
-
-                                    <button type="submit" class="btn btn-outline-primary-2">
-                                        <span>Bình luận</span>
-                                        <i class="icon-long-arrow-right"></i>
-                                    </button>
-                                </form>
-                            </div><!-- End .reply -->
                 		</div><!-- End .col-lg-9 -->
 
                 		<aside class="col-lg-3">

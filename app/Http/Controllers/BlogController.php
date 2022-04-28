@@ -67,7 +67,7 @@ class BlogController extends Controller
 
     public function list_post(){
         $this->AuthLogin();
-        $all_post = Post::with('cate_post')->orderBy('post_id')->paginate(6);
+        $all_post = Post::with('cate_post')->orderBy('post_id')->paginate(4);
         return view('admin.post.list_post')->with(compact('all_post',$all_post));
     }
 
@@ -121,9 +121,16 @@ class BlogController extends Controller
         return view('pages.blog.show_category_post')->with('category_post',$category_post)->with('post',$post);
     }
 
-    public function blog_details($post_meta_desc){
-        $post =DB::table('tbl_post')->where('post_meta_desc',$post_meta_desc)->get();
+    public function blog_details($post_slug){
+        $post =DB::table('tbl_post')->join('tbl_category_post','tbl_category_post.category_post_id','=','tbl_post.category_post_id')
+        ->where('post_status',0)->where('post_slug',$post_slug)->get();
+
+        $category_post_id =DB::table('tbl_post')->where('post_status',0)->where('post_slug',$post_slug)->value('category_post_id');
+
+        $post_release = DB::table('tbl_post')->join('tbl_category_post','tbl_category_post.category_post_id','=','tbl_post.category_post_id')
+        ->where('tbl_post.category_post_id',$category_post_id)->whereNotIn('tbl_post.post_slug',[$post_slug])->limit(3)->get();
+
         $category_post = DB::table('tbl_category_post')->where('category_post_status','0')->get();
-        return view('pages.blog.show_details_blog')->with(compact('post','category_post'));
+        return view('pages.blog.show_details_blog')->with(compact('post','category_post','post_release'));
     }
 }

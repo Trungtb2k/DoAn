@@ -32,7 +32,7 @@
                             <div class="entry-item lifestyle shopping col-sm-6 col-lg-4">
                                 <article class="entry entry-grid text-center">
                                     <figure class="entry-media">
-                                        <a href="single.html">
+                                        <a href="{{URL::to('/blog-details/'.$value->post_slug)}}">
                                             <img src="{{asset('public/upload/post/'.$value->post_image)}}" alt="image desc">
                                         </a>
                                     </figure><!-- End .entry-media -->
@@ -47,7 +47,7 @@
                                         </div><!-- End .entry-meta -->
 
                                         <h2 class="entry-title">
-                                            <a href="{{URL::to('/blog-details/'.$value->post_meta_desc)}}">{{$value->post_title}}</a>
+                                            <a href="{{URL::to('/blog-details/'.$value->post_slug)}}">{{$value->post_title}}</a>
                                         </h2><!-- End .entry-title -->
 
                                         <div class="entry-cats">
@@ -57,7 +57,7 @@
 
                                         <div class="entry-content">
                                             <p>{!!$value->post_desc!!}</p>
-                                            <a href="{{URL::to('/blog-details/'.$value->post_meta_desc)}}" class="read-more">Continue Reading</a>
+                                            <a href="{{URL::to('/blog-details/'.$value->post_slug)}}" class="read-more">Continue Reading</a>
                                         </div><!-- End .entry-content -->
                                     </div><!-- End .entry-body -->
                                 </article><!-- End .entry -->

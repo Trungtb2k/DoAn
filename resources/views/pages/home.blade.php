@@ -403,12 +403,12 @@
                                     </div><!-- End .entry-meta -->
 
                                     <h3 class="entry-title">
-                                        <a href="{{URL::to('/blog-details/'.$post1->post_meta_desc)}}">{{$post1->post_title}}</a>
+                                        <a href="{{URL::to('/blog-details/'.$post1->post_slug)}}">{{$post1->post_title}}</a>
                                     </h3><!-- End .entry-title -->
 
                                     <div class="entry-content">
-                                        <p>{{$post1->post_desc}}</p>
-                                        <a href="{{URL::to('/blog-details/'.$post1->post_meta_desc)}}" class="read-more">Read More</a>
+                                        <p>{!!$post1->post_desc!!}</p>
+                                        <a href="{{URL::to('/blog-details/'.$post1->post_slug)}}" class="read-more">Xem thêm</a>
                                     </div><!-- End .entry-content -->
                                 </div><!-- End .entry-body -->
                             </article><!-- End .entry -->
@@ -419,7 +419,7 @@
                 </div><!-- container -->
 
                 <div class="more-container text-center mb-0 mt-3">
-                    <a href="blog.html" class="btn btn-outline-darker btn-more"><span>Xem thêm</span><i class="icon-long-arrow-right"></i></a>
+                    <a href="{{URL::to('/blog')}}" class="btn btn-outline-darker btn-more"><span>Xem thêm</span><i class="icon-long-arrow-right"></i></a>
                 </div><!-- End .more-container -->
             </div>
             <div class="cta cta-display bg-image pt-4 pb-4" style="background-image: url(public/frontend/images/bg-6.jpg);">
