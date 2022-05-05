@@ -30,6 +30,7 @@
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{asset('public/frontend/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('public/frontend/css/rate.css')}}">
     <link rel="stylesheet" href="{{asset('public/frontend/css/test.css')}}">
 
     <link rel="stylesheet" href="{{asset('public/frontend/css/lightslider.css')}}">
@@ -130,6 +131,17 @@
                         <div class="dropdown cart-dropdown">
                             <a href="{{URL::to('/show-cart')}}" class="dropdown-toggle" role="button" >
                                 <i class="icon-shopping-cart"></i>
+                                    @php
+                                        $total = 0;
+                                        $cart = 0;
+                                        $cart = Session::get('cart');
+                                        if($cart == false){
+                                            $cart = [];
+                                        }
+
+                                        $total = count($cart);
+                                    @endphp
+                                <span class="cart-count">{{$total}}</span>
                             </a>
 
                         </div><!-- End .cart-dropdown -->
@@ -229,21 +241,21 @@
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
                     <li class="active">
-                        <a href="{{URL::to('/Home')}}">Home</a>
+                        <a href="{{URL::to('/Home')}}">Trang chủ</a>
                     </li>
                     <li>
-                        <a href="{{URL::to('/shop')}}">Shop</a>
+                        <a href="{{URL::to('/shop')}}">Sản phẩm</a>
 
                     </li>
                     <li>
-                        <a href="blog.html">Blog</a>
+                        <a href="{{URL::to('/blog')}}">Blog</a>
 
                     </li>
                     <li>
-                        <a href="about.html">About</a>
+                        <a href="about.html">Về chúng tôi</a>
                     </li>
                     <li>
-                        <a href="contact.html">Contact</a>
+                        <a href="contact.html">Liên hệ</a>
                     </li>
                 </ul>
             </nav><!-- End .mobile-nav -->
@@ -313,6 +325,48 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
+            load_comment();
+
+            function load_comment(){
+                var product_id = $('.comment_product_id').val();
+                var _token = $('input[name="_token"]').val();
+
+                $.ajax({
+                    url:"{{url('/load-comment')}}",
+                    method:"POST",
+                    data:{product_id:product_id, _token:_token},
+                    success:function(data){
+                        $('#comment_show').html(data);
+                    }
+                });
+            }
+            var star = '';
+                $(".rate").click(function(){
+                star = document.querySelector('input[name="rate"]:checked').value;;
+                });
+
+            $('.send-comment').click(function(){
+                var product_id = $('.comment_product_id').val();
+                var comment_name = $('.comment_name').val();
+                var comment = $('.comment').val();
+                var comment_phone = $('.comment_phone').val();
+                var comment_date = new Date().toLocaleDateString();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url:"{{url('/send-comment')}}",
+                    method:"POST",
+                    data:{product_id:product_id, _token:_token,comment_name:comment_name,comment:comment,
+                    comment_phone:comment_phone,star:star,comment_date:comment_date},
+                    success:function(data){
+                        load_comment();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
             $(".add-to-cart").click(function(){
                 var id = $(this).data('id_product');
                 var cart_product_id = $('.cart_product_id_'+id).val();
@@ -330,18 +384,18 @@
                         cart_product_name:cart_product_name,cart_product_image:cart_product_image
                         ,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
                     success:function(data){
-                        swal({
-                                title: "Đã thêm sản phẩm vào giỏ hàng",
-                                text: "Bạn có thể tiếp tục mua sắm hoặc tới giỏ hàng để thanh toán",
-                                showCancelButton: true,
-                                cancelButtonText: "Tiếp tục",
-                                confirmButtonClass: "btn-success",
-                                confirmButtonText: "Đi đến giỏ hàng",
-                                closeOnConfirm: false
-                            },
-                            function() {
+                        // swal({
+                        //         title: "Đã thêm sản phẩm vào giỏ hàng",
+                        //         text: "Bạn có thể tiếp tục mua sắm hoặc tới giỏ hàng để thanh toán",
+                        //         showCancelButton: true,
+                        //         cancelButtonText: "Tiếp tục",
+                        //         confirmButtonClass: "btn-success",
+                        //         confirmButtonText: "Đi đến giỏ hàng",
+                        //         closeOnConfirm: false
+                        //     },
+                        //    function() {
                                 window.location.href = "{{url('/show-cart')}}";
-                            });
+                            // });
                     }
                 });
             });

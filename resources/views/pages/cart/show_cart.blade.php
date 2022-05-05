@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 <main class="main">
-        	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        	<div class="page-header text-center" style="background-image: url(public/frontend/images/page-header-bg.jpg)">
         		<div class="container">
         			<h1 class="page-title">Giỏ hàng<span>Cửa hàng</span></h1>
         		</div><!-- End .container -->

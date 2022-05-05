@@ -24,13 +24,18 @@
                 				<div class="toolbox-right">
                 					<div class="toolbox-sort">
                 						<label for="sortby">Sắp xếp:</label>
-                						<div class="select-custom">
-											<select name="sortby" id="sortby" class="form-control">
-												<option value="popularity" selected="selected">Most Popular</option>
-												<option value="rating">Most Rated</option>
-												<option value="date">Date</option>
-											</select>
-										</div>
+                						<form>
+                                            @csrf
+                                            <div class="select-custom">
+                                                <select name="sort" id="sort" class="form-control">
+                                                    <option value="{{Request::url()}}?sort_by=none" selected="selected">Sắp xếp</option>
+                                                    <option value="{{Request::url()}}?sort_by=tang_dan">Giá tăng dần</option>
+                                                    <option value="{{Request::url()}}?sort_by=giam_dan">Giá giảm dần</option>
+                                                    <option value="{{Request::url()}}?sort_by=kytu_az">Sắp xếp từ A đến Z</option>
+                                                    <option value="{{Request::url()}}?sort_by=kytu_za">Sắp xếp từ Z đến A</option>
+                                                </select>
+                                            </div>
+                                        </form>
                 					</div><!-- End .toolbox-sort -->
 
                 				</div><!-- End .toolbox-right -->
@@ -69,11 +74,6 @@
                                                     <div class="product-price">
                                                         {{number_format($value->product_price)}}đ
                                                     </div><!-- End .product-price -->
-                                                    <div class="ratings-container">
-                                                        <div class="ratings">
-                                                            <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                                        </div><!-- End .ratings -->
-                                                    </div><!-- End .rating-container -->
                                                 </div><!-- End .product-body -->
                                             </form>
                                             </div><!-- End .product -->

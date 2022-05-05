@@ -70,6 +70,9 @@ Route::get('/active-product/{product_id}', [ProductController::class,'active_pro
 
 Route::get('/product-details/{product_id}/{attr_id}', [ProductController::class,'product_details']);
 
+Route::post('/load-comment',[ProductController::class,'load_comment']);
+Route::post('/send-comment',[ProductController::class,'send_comment']);
+
 //Product Details
 Route::get('/add-product-details',[ProductDetails::class,'add_product_details']);
 Route::get('/list-product-details',[ProductDetails::class,'list_product_details']);
@@ -80,6 +83,8 @@ Route::post('/update-product-details/{product_id}/{attr_id}', [ProductDetails::c
 
 Route::get('/unactive-product-attr/{product_id}/{attr_id}', [ProductDetails::class,'unactive_product_attr']);
 Route::get('/active-product-attr/{product_id}/{attr_id}', [ProductDetails::class,'active_product_attr']);
+
+
 
 //Category product home
 Route::get('/category-product/{category_id}', [CategoryProduct::class,'show_category_details']);

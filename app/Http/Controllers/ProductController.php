@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Gallery;
+use App\Models\Comment;
 use Facade\Ignition\Tabs\Tab;
 use Illuminate\Support\Facades\File;
 
@@ -144,6 +145,8 @@ class ProductController extends Controller
         $attr_name = DB::table('tbl_attr')->join('tbl_product_attr','tbl_attr.attr_id','=','tbl_product_attr.attr_id')
         ->where('tbl_product_attr.product_id',$product_id)->get();
 
+        $rate = DB::table('tbl_comment')->where('comment_product_id',$product_id)->get();
+
         $details_product = DB::table('tbl_product_attr')
         ->join('tbl_product','tbl_product.product_id','=','tbl_product_attr.product_id')
         ->join('tbl_attr','tbl_attr.attr_id','=','tbl_product_attr.attr_id')
@@ -169,6 +172,52 @@ class ProductController extends Controller
 
         return view('pages.product.show_details')->with('category',$cate_product)
         ->with('brand',$brand_product)->with('product_details',$details_product)->with('attr_name',$attr_name)
-        ->with('related',$related_product)->with('gallery',$gallery);
+        ->with('related',$related_product)->with('gallery',$gallery)->with('rate',$rate);
+    }
+
+    public function load_comment(Request $request){
+        $product_id = $request->product_id;
+        $comment = Comment::where('comment_product_id',$product_id)->get();
+        $output = '';
+        foreach($comment as $key => $comm){
+            $output .= ' <div class="review">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <h4><a href="#">'.$comm->comment_name.'</a></h4>
+                            <div class="ratings-container">
+                                <div class="ratings">
+                                    <div class="ratings-val" style="width: '.(($comm->star)/0.05).'%;"></div><!-- End .ratings-val -->
+                                </div><!-- End .ratings -->
+                            </div><!-- End .rating-container -->
+                            <span class="review-date">'.$comm->comment_date.'</span>
+                        </div><!-- End .col -->
+                        <div class="col">
+                            <div class="review-content">
+                                <p>'.$comm->comment.'</p>
+                            </div><!-- End .review-content -->
+                        </div><!-- End .col-auto -->
+                    </div><!-- End .row -->
+                </div><!-- End .review -->';
+        }
+        echo $output;
+    }
+
+    public function send_comment(Request $request){
+        $product_id = $request->product_id;
+        $comment_name = $request->comment_name;
+        $comment_content  = $request->comment;
+        $comment_phone = $request->comment_phone;
+        $star = $request->star;
+        $comment_date = $request->comment_date;
+
+        $comment = new Comment();
+        $comment->comment_name = $comment_name;
+        $comment->comment = $comment_content;
+        $comment->comment_phone = $comment_phone;
+        $comment->comment_product_id = $product_id;
+        $comment->star = $star;
+        $comment->comment_date = $comment_date;
+
+        $comment->save();
     }
 }

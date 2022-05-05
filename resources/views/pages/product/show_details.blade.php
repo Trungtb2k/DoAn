@@ -39,10 +39,22 @@
                                     <h1 class="product-title">{{($value->product_name)}}</h1><!-- End .product-title -->
 
                                     <div class="ratings-container">
+                                        @php
+                                            $percent = 0;
+                                            $count = 0;
+                                            $star = 0;
+                                        @endphp
+                                        @foreach($rate as $key => $rat)
+                                            @php
+                                                $count += 1;
+                                                $star += ($rat->star);
+                                                $percent = $star*100/($count*5);
+                                            @endphp
+                                        @endforeach
                                         <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
+                                                <div class="ratings-val" style="width: <?=$percent?>%;"></div><!-- End .ratings-val -->
+                                            </div><!-- End .ratings -->
+                                            <a class="ratings-text" href="#product-review-link" id="review-link">( {{$count}} Đánh giá )</a>
                                     </div><!-- End .rating-container -->
 
                                     <div class="product-price">
@@ -141,31 +153,52 @@
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
                                 <div class="reviews">
-                                    <div class="review">
-                                        <div class="row no-gutters">
-                                            <div class="col-auto">
-                                                <h4><a href="#">Samanta J.</a></h4>
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                                    </div><!-- End .ratings -->
-                                                </div><!-- End .rating-container -->
-                                                <span class="review-date">6 days ago</span>
-                                            </div><!-- End .col -->
-                                            <div class="col">
-                                                <h4>Good, perfect size</h4>
+                                <div id="comment_show"></div>
 
-                                                <div class="review-content">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus cum dolores assumenda asperiores facilis porro reprehenderit animi culpa atque blanditiis commodi perspiciatis doloremque, possimus, explicabo, autem fugit beatae quae voluptas!</p>
-                                                </div><!-- End .review-content -->
+                                <div class="reply" style="margin-top: 20px;">
+                                <div class="heading">
+                                    <h3 class="title">Đánh giá và nhận xét sản phẩm</h3><!-- End .title -->
+                                    <p class="title-desc">Bạn cảm thấy sản phẩm như thế nào?</p>
+                                </div><!-- End .heading -->
 
-                                                <div class="review-action">
-                                                    <a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
-                                                    <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                                </div><!-- End .review-action -->
-                                            </div><!-- End .col-auto -->
-                                        </div><!-- End .row -->
-                                    </div><!-- End .review -->
+
+                                <form action="#" style="margin-top: -35px;">
+                                    @csrf
+                                    <div class="rate" style="margin-bottom: 15px;">
+                                        <input type="radio" id="star5" name="rate" value="5" />
+                                        <label for="star5" title="text">5 stars</label>
+                                        <input type="radio" id="star4" name="rate" value="4" />
+                                        <label for="star4" title="text">4 stars</label>
+                                        <input type="radio" id="star3" name="rate" value="3" />
+                                        <label for="star3" title="text">3 stars</label>
+                                        <input type="radio" id="star2" name="rate" value="2" />
+                                        <label for="star2" title="text">2 stars</label>
+                                        <input type="radio" id="star1" name="rate" value="1" />
+                                        <label for="star1" title="text">1 star</label>
+                                    </div>
+
+                                    <input type="hidden" name="comment_product_id" class="comment_product_id" value="{{$value->product_id}}">
+                                    <label for="reply-message" class="sr-only">Xin mời chia sẻ một số cảm nhận về sản phẩm</label>
+                                    <textarea name="reply-message" id="reply-message" cols="30" rows="4" class="form-control comment" required placeholder="Xin mời chia sẻ một số cảm nhận về sản phẩm *"></textarea>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="reply-name" class="sr-only">Họ và tên</label>
+                                            <input type="text" class="form-control comment_name" id="reply-name" name="reply-name" required placeholder="Họ và tên *">
+                                        </div><!-- End .col-md-6 -->
+
+                                        <div class="col-md-6">
+                                            <label for="reply-email" class="sr-only">Số điện thoại</label>
+                                            <input type="text" class="form-control comment_phone" id="reply-email" name="reply-email" required placeholder="Số điện thoại *">
+                                        </div><!-- End .col-md-6 -->
+                                    </div><!-- End .row -->
+
+                                    <button type="submit" class="btn btn-outline-primary-2 send-comment">
+                                        <span>GỬI ĐÁNH GIÁ</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </button>
+                                </form>
+                    </div><!-- End .reply -->
 
                                 </div><!-- End .reviews -->
                             </div><!-- .End .tab-pane -->
@@ -226,6 +259,8 @@
                                 </div><!-- End .product-body -->
                             </div><!-- End .product -->
                         @endforeach
+                        </div><!-- End .owl-carousel -->
+
 
                     </div><!-- End .owl-carousel -->
                 </div><!-- End .container -->

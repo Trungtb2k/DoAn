@@ -4,7 +4,7 @@
         @foreach($brand_name as $key => $value)
         	<div class="page-header text-center" style="background-image: url(public/frontend/images/slide-3.png)">
         		<div class="container">
-        			<h1 class="page-title">{{($value->brand_name)}}<span>Shop</span></h1>
+        			<h1 class="page-title">{{($value->brand_name)}}<span>Sản phẩm</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
@@ -26,13 +26,18 @@
                 				<div class="toolbox-right">
                 					<div class="toolbox-sort">
                 						<label for="sortby">Sắp xếp:</label>
-                						<div class="select-custom">
-											<select name="sortby" id="sortby" class="form-control">
-												<option value="popularity" selected="selected">Most Popular</option>
-												<option value="rating">Most Rated</option>
-												<option value="date">Date</option>
-											</select>
-										</div>
+                						<form>
+                                            @csrf
+                                            <div class="select-custom">
+                                                <select name="sort" id="sort" class="form-control">
+                                                    <option value="{{Request::url()}}?sort_by=none" selected="selected">Sắp xếp</option>
+                                                    <option value="{{Request::url()}}?sort_by=tang_dan">Giá tăng dần</option>
+                                                    <option value="{{Request::url()}}?sort_by=giam_dan">Giá giảm dần</option>
+                                                    <option value="{{Request::url()}}?sort_by=kytu_az">Sắp xếp từ A đến Z</option>
+                                                    <option value="{{Request::url()}}?sort_by=kytu_za">Sắp xếp từ Z đến A</option>
+                                                </select>
+                                            </div>
+                                        </form>
                 					</div><!-- End .toolbox-sort -->
 
                 				</div><!-- End .toolbox-right -->
@@ -71,11 +76,7 @@
                                                     <div class="product-price">
                                                         {{number_format($value->product_price)}}đ
                                                     </div><!-- End .product-price -->
-                                                    <div class="ratings-container">
-                                                        <div class="ratings">
-                                                            <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                                        </div><!-- End .ratings -->
-                                                    </div><!-- End .rating-container -->
+
                                                 </div><!-- End .product-body -->
                                             </form>
                                             </div><!-- End .product -->

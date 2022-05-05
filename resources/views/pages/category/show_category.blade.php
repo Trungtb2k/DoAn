@@ -74,11 +74,7 @@
                                                     <div class="product-price">
                                                         {{number_format($value->product_price)}}đ
                                                     </div><!-- End .product-price -->
-                                                    <div class="ratings-container">
-                                                        <div class="ratings">
-                                                            <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                                        </div><!-- End .ratings -->
-                                                    </div><!-- End .rating-container -->
+
                                                 </div><!-- End .product-body -->
                                                 </form>
                                             </div><!-- End .product -->
