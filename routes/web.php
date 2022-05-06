@@ -84,8 +84,6 @@ Route::post('/update-product-details/{product_id}/{attr_id}', [ProductDetails::c
 Route::get('/unactive-product-attr/{product_id}/{attr_id}', [ProductDetails::class,'unactive_product_attr']);
 Route::get('/active-product-attr/{product_id}/{attr_id}', [ProductDetails::class,'active_product_attr']);
 
-
-
 //Category product home
 Route::get('/category-product/{category_id}', [CategoryProduct::class,'show_category_details']);
 Route::get('/brand/{brand_id}', [CategoryProduct::class,'show_brand_details']);

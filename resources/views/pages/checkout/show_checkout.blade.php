@@ -120,7 +120,7 @@
 										    <div class="card">
 										        <div class="card-header" id="heading-2">
 										            <h2 class="card-title">
-                                                    <input type="checkbox" style="margin-top: 5px;" class="collapsed" value="Tiền mặt" name="payment_option">
+                                                    <input type="checkbox" style="margin-top: 5px;" class="collapsed" value="Thanh toán khi nhận hàng" name="payment_option">
 										                Thanh toán khi nhận hàng
 										            </h2>
 										        </div><!-- End .card-header -->
@@ -129,25 +129,15 @@
 										    <div class="card">
 										        <div class="card-header" id="heading-4">
 										            <h2 class="card-title">
-                                                    <input type="checkbox" style="margin-top: 5px;" class="collapsed" value="Paypal" name="payment_option">
-										                PayPal
-										            </h2>
-										        </div><!-- End .card-header -->
-										    </div><!-- End .card -->
-
-										    <div class="card">
-										        <div class="card-header" id="heading-5">
-										            <h2 class="card-title">
-                                                    <input style="margin-top: 5px;margin-bottom: 10px;" type="checkbox" class="collapsed" value="ATM" name="payment_option">
-										                Thanh toán bằng thẻ
-										            <img src="{{('public/frontend/images/payments-summary.png')}}" alt="payments cards">
+                                                    <input type="checkbox" style="margin-top: 5px;" class="collapsed" value="VNPay" name="payment_option">
+										                VNPay
 										            </h2>
 										        </div><!-- End .card-header -->
 										    </div><!-- End .card -->
 										</div><!-- End .accordion -->
                                         </form>
 
-		                				<button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+		                				<button type="submit" name="redirect" class="btn btn-outline-primary-2 btn-order btn-block">
 		                					<span class="btn-text">Đặt hàng</span>
 		                					<span class="btn-hover-text">Tiến hành thanh toán</span>
 		                				</button>
