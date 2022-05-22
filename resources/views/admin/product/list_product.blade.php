@@ -16,12 +16,13 @@
               <label class="i-checks m-b-none">
               </label>
             </th>
-            <th>Product Name</th>
-            <th>Product Gallery</th>
-            <th>Product Image</th>
-            <th>Product Category</th>
-            <th>Brand</th>
-            <th>Display</th>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Thư viện ảnh</th>
+            <th>Hình ảnh</th>
+            <th>Danh mục</th>
+            <th>Thương hiệu</th>
+            <th>Trạng thái</th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
@@ -30,7 +31,8 @@
           <tr>
             <td><label class="i-checks m-b-none"><i></i></label></td>
             <td>{{$pro->product_name}}</td>
-            <td><a href="{{url('/add-gallery/'.$pro->product_id)}}">Add product gallery</td>
+            <td>{{$pro->product_quantity}}</td>
+            <td><a href="{{url('/add-gallery/'.$pro->product_id)}}">Thêm thư viện ảnh</td>
             <td><img src="public/upload/product/{{$pro->product_image}}" height="100" width="100"></td>
             <td>{{$pro->category_name}}</td>
             <td>{{$pro->brand_name}}</td>
@@ -38,11 +40,11 @@
             <?php
                 if($pro->product_status==0){
                    ?>
-                <a href="{{URL::to('/unactive-product/'.$pro->product_id)}}"><span>Hide</span></a>
+                <a href="{{URL::to('/unactive-product/'.$pro->product_id)}}"><span>Ẩn</span></a>
                 <?php
                 }else{
                 ?>
-                <a href="{{URL::to('/active-product/'.$pro->product_id)}}"><span>Show</span></a>
+                <a href="{{URL::to('/active-product/'.$pro->product_id)}}"><span>Hiển thị</span></a>
                 <?php
                 }
                 ?>

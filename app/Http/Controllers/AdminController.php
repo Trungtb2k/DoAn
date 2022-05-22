@@ -22,12 +22,11 @@ class AdminController extends Controller
     }
 
     public function show_dashboard(){
-       $this->AuthLogin();
-       return view('admin.dashboard');
+        $this->AuthLogin();
+        return view('admin.dashboard');
     }
 
     public function dashboard(Request $request){
-        $this->AuthLogin();
         $admin_email = $request->admin_email;
         $admin_password = $request->admin_password;
 

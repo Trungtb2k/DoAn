@@ -18,13 +18,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-
-            <td>{{$order_2->shipping_name}}</td>
-            <td>{{$order_2->shipping_address}}</td>
-            <td>{{$order_2->shipping_phone}}</td>
-
-          </tr>
+            <tr>
+                <td>{{$order_2->shipping_name}}</td>
+                <td>{{$order_2->shipping_address}}</td>
+                <td>{{$order_2->shipping_phone}}</td>
+              </tr>
         </tbody>
       </table>
     </div>
@@ -67,6 +65,8 @@
             ?>
             <td>{{$row['attr_name']}}</td>
             <td>{{$v_content->product_sales_quantity}}</td>
+            <input type="hidden" name="product_sales_quantity" value="{{$v_content->product_sales_quantity}}">
+            <input type="hidden" name="order_product_id" class="order_product_id" value="{{$v_content->product_id}}">
             <td>{{number_format($v_content->product_price)}} đ</td>
             <td>{{number_format($v_content->product_price*$v_content->product_sales_quantity)}} đ</td>
           </tr>
@@ -76,5 +76,93 @@
     </div>
 
   </div>
+  </div>
 </div>
+
+<br></br>
+
+<div class="table-agile-info">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Trạng thái đơn hàng
+    </div>
+
+    <div class="table-responsive">
+    @foreach($order_by_Id1 as $key=>$status)
+            @if($status->order_status==0)
+                <form>
+                    @csrf
+                    <select class="form-control order_details">
+                        <option id="{{$status->order_id}}" selected value="0">Đang xử lý</option>
+                        <option id="{{$status->order_id}}" value="1">Đã được xử lý</option>
+                        <option id="{{$status->order_id}}" value="2">Vận chuyển</option>
+                        <option id="{{$status->order_id}}" value="3">Từ chối nhận</option>
+                        <option id="{{$status->order_id}}" value="4">Hoàn lại</option>
+                        <option id="{{$status->order_id}}" value="5">Hoàn thành</option>
+                    </select>
+                </form>
+            @elseif($status->order_status==1)
+                <form>
+                    @csrf
+                    <select class="form-control order_details">
+                        <option id="{{$status->order_id}}" value="0">Đang xử lý</option>
+                        <option id="{{$status->order_id}}" selected value="1">Đã được xử lý</option>
+                        <option id="{{$status->order_id}}" value="2">Vận chuyển</option>
+                        <option id="{{$status->order_id}}" value="3">Từ chối nhận</option>
+                        <option id="{{$status->order_id}}" value="4">Hoàn lại</option>
+                        <option id="{{$status->order_id}}" value="5">Hoàn thành</option>
+                    </select>
+                </form>
+            @elseif($status->order_status==2)
+                <form>
+                    @csrf
+                    <select class="form-control order_details">
+                        <option id="{{$status->order_id}}" value="0">Đang xử lý</option>
+                        <option id="{{$status->order_id}}" value="1">Đã được xử lý</option>
+                        <option id="{{$status->order_id}}" selected value="2">Vận chuyển</option>
+                        <option id="{{$status->order_id}}" value="3">Từ chối nhận</option>
+                        <option id="{{$status->order_id}}" value="4">Hoàn lại</option>
+                        <option id="{{$status->order_id}}" value="5">Hoàn thành</option>
+                    </select>
+                </form>
+            @elseif($status->order_status==3)
+                <form>
+                    @csrf
+                    <select class="form-control order_details">
+                        <option id="{{$status->order_id}}" value="0">Đang xử lý</option>
+                        <option id="{{$status->order_id}}" value="1">Đã được xử lý</option>
+                        <option id="{{$status->order_id}}" selected value="2">Vận chuyển</option>
+                        <option id="{{$status->order_id}}" value="3">Từ chối nhận</option>
+                        <option id="{{$status->order_id}}" value="4">Hoàn lại</option>
+                        <option id="{{$status->order_id}}" value="5">Hoàn thành</option>
+                    </select>
+                </form>
+            @elseif($status->order_status==4)
+                <form>
+                    @csrf
+                    <select class="form-control order_details">
+                        <option id="{{$status->order_id}}" value="0">Đang xử lý</option>
+                        <option id="{{$status->order_id}}" value="1">Đã được xử lý</option>
+                        <option id="{{$status->order_id}}" value="2">Vận chuyển</option>
+                        <option id="{{$status->order_id}}" value="3">Từ chối nhận</option>
+                        <option id="{{$status->order_id}}" selected value="4">Hoàn lại</option>
+                        <option id="{{$status->order_id}}" value="5">Hoàn thành</option>
+                    </select>
+                </form>
+            @elseif($status->order_status==5)
+                <form>
+                    @csrf
+                    <select class="form-control order_details">
+                        <option id="{{$status->order_id}}" value="0">Đang xử lý</option>
+                        <option id="{{$status->order_id}}" value="1">Đã được xử lý</option>
+                        <option id="{{$status->order_id}}" value="2">Vận chuyển</option>
+                        <option id="{{$status->order_id}}" value="3">Từ chối nhận</option>
+                        <option id="{{$status->order_id}}" value="4">Hoàn lại</option>
+                        <option id="{{$status->order_id}}" selected value="5">Hoàn thành</option>
+                    </select>
+                </form>
+            @endif
+        @endforeach
+    </div>
+
 @endsection

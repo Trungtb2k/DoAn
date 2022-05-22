@@ -43,6 +43,8 @@ class ProductController extends Controller
     public function save_product(Request $request){
         $this->AuthLogin();
         $data['product_name']=$request->product_name;
+        $data['product_quantity']=$request->product_quantity;
+        $data['product_sold']=0;
         $data['product_content']=$request->product_content;
         $data['product_desc']=$request->product_desc;
         $data['product_config']=$request->product_configuration;
@@ -104,6 +106,7 @@ class ProductController extends Controller
         $this->AuthLogin();
         $data = array();
         $data['product_name']=$request->product_name;
+        $data['product_quantity']=$request->product_quantity;
         $data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;
         $data['product_config']=$request->product_configuration;

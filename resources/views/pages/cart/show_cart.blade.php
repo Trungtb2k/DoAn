@@ -72,12 +72,15 @@
                                                 $memory = "select attr_name from tbl_attr where attr_id = ".$cart['attr_id'];
                                                 $result = $mysqli->query($memory);
                                                 $row = $result->fetch_assoc();
+                                                $qty = "select product_quantity from tbl_product where product_id = ".$cart['product_id'];
+                                                $result1 = $mysqli->query($qty);
+                                                $row1 = $result1->fetch_assoc();
                                             ?>
                                             <td>{{$row['attr_name']}}</td>
 											<td class="price-col">{{number_format($cart['product_price'])}}đ</td>
 											<td class="quantity-col">
                                                 <div class="cart-product-quantity">
-                                                    <input type="number" class="form-control" value="{{$cart['product_qty']}}" name="cart_qty[{{$cart['session_id']}}]">
+                                                    <input type="number" class="form-control" min="1" max="<?=$row1['product_quantity']?>" value="{{$cart['product_qty']}}" name="cart_qty[{{$cart['session_id']}}]">
                                                 </div><!-- End .cart-product-quantity -->
                                             </td>
 											<td class="total-col">{{number_format($subtotal)}}đ</td>
@@ -132,7 +135,20 @@
 	                					</tbody>
 	                				</table><!-- End .table table-summary -->
 
-	                				<a href="{{URL::to('/checkout')}}" class="btn btn-outline-primary-2 btn-order btn-block">Thanh toán</a>
+                                    <?php
+                                    use Illuminate\Support\Facades\Session;
+                                    $cart_checkout = Session::get('cart');
+                                    if($cart_checkout!=Null){
+                                    ?>
+                                        <a href="{{URL::to('/checkout')}}" class="btn btn-outline-primary-2 btn-order btn-block">Thanh toán</a>
+                                    <?php
+                                        }else{
+                                    ?>
+                                       <a href="{{URL::to('/checkout')}}" class="btn btn-outline-primary-2 btn-order btn-block" style="pointer-events: none">Thanh toán</a>
+                                    <?php
+                                        }
+                                    ?>
+
 	                			</div><!-- End .summary -->
 
 		            			<a href="{{URL::to('/')}}" class="btn btn-outline-dark-2 btn-block mb-3"><span>Tiếp tục mua sắm</span><i class="icon-refresh"></i></a>

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Order;
+use App\Models\Product;
 
 class CheckoutController extends Controller
 {
@@ -205,16 +207,23 @@ class CheckoutController extends Controller
     {
 
         $this->AuthLogin();
-        $order_2 = DB::table('tbl_order')
-            ->join('tbl_shipping', 'tbl_shipping.shipping_id', '=', 'tbl_order.shipping_id')
-            ->select('tbl_order.*', 'tbl_shipping.*')->first();
+        $order_2 = DB::table('tbl_shipping')
+            ->join('tbl_order', 'tbl_order.shipping_id', '=', 'tbl_shipping.shipping_id')
+            ->select('tbl_order.*', 'tbl_shipping.*')
+            ->where('tbl_order.order_id', $orderId)->first();
 
         $order_by_Id = DB::table('tbl_order')
             ->join('tbl_order_details', 'tbl_order_details.order_id', '=', 'tbl_order.order_id')
             ->select('tbl_order.*', 'tbl_order_details.*')
             ->where('tbl_order.order_id', $orderId)->get();
 
-        $manager_order_by_Id = view('admin.view_order')->with('order_by_Id', $order_by_Id)->with('order_2', $order_2);
+        $order_by_Id1 = DB::table('tbl_order')
+        ->join('tbl_order_details', 'tbl_order_details.order_id', '=', 'tbl_order.order_id')
+        ->select('tbl_order.*', 'tbl_order_details.*')
+        ->where('tbl_order.order_id', $orderId)->limit(1)->get();
+
+        $manager_order_by_Id = view('admin.view_order')->with('order_by_Id', $order_by_Id)
+        ->with('order_2', $order_2)->with('order_by_Id1', $order_by_Id1);
 
         return view('admin.admin_layout')->with('admin.view_order', $manager_order_by_Id);
     }
@@ -226,5 +235,28 @@ class CheckoutController extends Controller
         DB::table('tbl_order_details')->join('tbl_order', 'tbl_order.order_id', '=', 'tbl_order_details.order_id')
             ->where('tbl_order_details.order_id', $order_id)->delete();
         return Redirect::to('manager-order');
+    }
+
+    public function update_order_qty(Request $request){
+        //update order status
+        $data = $request->all();
+        $order = Order::find($data['order_id']);
+        $order->order_status = $data['order_status'];
+        $order->save();
+        if($order->order_status==5){
+            foreach($data['order_product_id'] as $key=>$product_id){
+                $product = Product::find($product_id);
+                $product_quantity = $product->product_quantity;
+                $product_sold = $product->product_sold;
+                foreach($data['quantity'] as $key2=>$qty){
+                    if($key==$key2){
+                        $product_remain = $product_quantity-$qty;
+                        $product->product_quantity=$product_remain;
+                        $product->product_sold = $product_sold + $qty;
+                        $product->save();
+                    }
+                }
+            }
+        }
     }
 }

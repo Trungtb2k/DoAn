@@ -115,6 +115,7 @@ Route::post('/save-checkout', [CheckoutController::class,'save_checkout']);
 Route::get('/manager-order', [CheckoutController::class,'manager_order']);
 Route::get('/view-order/{orderId}', [CheckoutController::class,'view_order']);
 Route::get('/delete-order/{orderId}', [CheckoutController::class,'delete_order']);
+Route::post('/update-order-qty', [CheckoutController::class,'update_order_qty']);
 
 //Coupon
 Route::get('/add-coupon', [CouponController::class,'add_coupon']);
