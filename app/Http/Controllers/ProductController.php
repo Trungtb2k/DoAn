@@ -134,6 +134,25 @@ class ProductController extends Controller
         return Redirect::to('list-product');
     }
 
+    public function list_comment(){
+        $this->AuthLogin();
+        $list_comment = DB::table('tbl_comment')->get();
+        $manager_comment = view('admin.comment.list_comment')->with('list_comment',$list_comment);
+        return view('admin.admin_layout')->with('admin.comment.list_comment',$manager_comment);
+    }
+
+    public function unactive_comment($comment_id){
+        $this->AuthLogin();
+        DB::table('tbl_comment')->where('comment_id',$comment_id)->update(['comment_status'=>1]);
+        return Redirect::to('list-comment');
+    }
+
+    public function active_comment($comment_id){
+        $this->AuthLogin();
+        DB::table('tbl_comment')->where('comment_id',$comment_id)->update(['comment_status'=>0]);
+        return Redirect::to('list-comment');
+    }
+
     //End Admin
 
     public function product_details($product_id,$attr_id){
@@ -148,7 +167,8 @@ class ProductController extends Controller
         $attr_name = DB::table('tbl_attr')->join('tbl_product_attr','tbl_attr.attr_id','=','tbl_product_attr.attr_id')
         ->where('tbl_product_attr.product_id',$product_id)->get();
 
-        $rate = DB::table('tbl_comment')->where('comment_product_id',$product_id)->get();
+        $rate = DB::table('tbl_comment')->where('comment_product_id',$product_id)
+        ->where('comment_status','1')->get();
 
         $details_product = DB::table('tbl_product_attr')
         ->join('tbl_product','tbl_product.product_id','=','tbl_product_attr.product_id')
@@ -180,7 +200,7 @@ class ProductController extends Controller
 
     public function load_comment(Request $request){
         $product_id = $request->product_id;
-        $comment = Comment::where('comment_product_id',$product_id)->get();
+        $comment = Comment::where('comment_product_id',$product_id)->where('comment_status','1')->get();
         $output = '';
         foreach($comment as $key => $comm){
             $output .= ' <div class="review">
@@ -213,6 +233,7 @@ class ProductController extends Controller
         $star = $request->star;
         $comment_date = $request->comment_date;
 
+
         $comment = new Comment();
         $comment->comment_name = $comment_name;
         $comment->comment = $comment_content;
@@ -220,7 +241,11 @@ class ProductController extends Controller
         $comment->comment_product_id = $product_id;
         $comment->star = $star;
         $comment->comment_date = $comment_date;
+        $comment->comment_status = 0;
 
         $comment->save();
+
     }
+
+
 }

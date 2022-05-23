@@ -13,21 +13,10 @@ session_start();
 
 class CartController extends Controller
 {
-    public function save_cart(Request $request)
-    {
-
-        $productId = $request->productid_hidden;
-        $quantity = $request->qty;
-        $product_info = DB::table('tbl_product')->where('product_id', $productId)->first();
-
-        $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderBy('category_id', 'desc')->get();
-        return view('pages.cart.show_cart')->with('category', $cate_product);
-    }
 
     public function show_cart()
     {
-        $cate_product = DB::table('tbl_category_product')->where('category_status', '1')->orderBy('category_id', 'desc')->get();
-        return view('pages.cart.show_cart')->with('category', $cate_product);
+        return view('pages.cart.show_cart');
     }
 
     public function add_cart_ajax(Request $request)

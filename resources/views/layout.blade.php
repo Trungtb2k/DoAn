@@ -358,6 +358,7 @@
                     data:{product_id:product_id, _token:_token,comment_name:comment_name,comment:comment,
                     comment_phone:comment_phone,star:star,comment_date:comment_date},
                     success:function(data){
+                        alert("Đánh giá của bạn sẽ được hệ thống kiểm duyệt.Xin cảm ơn!");
                         load_comment();
                     }
                 });

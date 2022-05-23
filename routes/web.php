@@ -72,6 +72,9 @@ Route::get('/product-details/{product_id}/{attr_id}', [ProductController::class,
 
 Route::post('/load-comment',[ProductController::class,'load_comment']);
 Route::post('/send-comment',[ProductController::class,'send_comment']);
+Route::get('/list-comment', [ProductController::class,'list_comment']);
+Route::get('/unactive-comment/{comment_id}', [ProductController::class,'unactive_comment']);
+Route::get('/active-comment/{comment_id}', [ProductController::class,'active_comment']);
 
 //Product Details
 Route::get('/add-product-details',[ProductDetails::class,'add_product_details']);
@@ -101,7 +104,6 @@ Route::post('delete-gallery', [GalleryController::class,'delete_gallery']);
 Route::post('update-gallery', [GalleryController::class,'update_gallery']);
 
 //Cart
-Route::post('/save-cart', [CartController::class,'save_cart']);
 Route::get('/show-cart', [CartController::class,'show_cart']);
 Route::post('/add-cart-ajax', [CartController::class,'add_cart_ajax']);
 Route::post('/update-cart', [CartController::class,'update_cart']);
