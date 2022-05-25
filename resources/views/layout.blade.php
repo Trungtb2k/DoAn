@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{{asset('public/frontend/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/frontend/css/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{asset('public/frontend/css/magnific-popup.css')}}">
+    <link rel="stylesheet" href="{{asset('public/frontend/css/nouislider.css')}}">
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{asset('public/frontend/css/style.css')}}">
@@ -277,7 +278,10 @@
     <script src="{{asset('public/frontend/js/jquery.waypoints.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/superfish.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('public/frontend/js/wNumb.js')}}"></script>
+    <script src="{{asset('public/frontend/js/bootstrap-input-spinner.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('public/frontend/js/nouislider.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.elevateZoom.min.js')}}"></script>
     <!-- Main JS File -->
     <script src="{{asset('public/frontend/js/main.js')}}"></script>
@@ -415,11 +419,12 @@
                     var image = data[i].image;
                     var url = data[i].url;
                     var valueImage = data[i].valueImage;
-                    $("#row_wishlist").append('<tr><td class="product-col"><div class="product"><input type="hidden" value="'+product_id+'" class="cart_product_id_'+product_id+'"><input type="hidden" id="wishlist_attrid'+product_id+'" value="'+attr_id+'" class="cart_attr_id_'+product_id+'"><input type="hidden" value="'+name+'" class="cart_product_name_'+product_id+'"><input type="hidden" value="'+valueImage+'" class="cart_product_image_'+product_id+'"><input type="hidden" value="'+price+'" class="cart_product_price_'+product_id+'"><input type="hidden" name="qty" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required><input type="hidden" value="1" class="cart_product_qty_'+product_id+'"><figure class="product-media"><a href="'+url+'"><img src="'+image+'" alt="Product image"></a></figure><h3 class="product-title"><a href="'+url+'">'+name+'</a></h3><!-- End .product-title --></div><!-- End .product --></td><td class="price-col">'+Intl.NumberFormat().format(price)+'đ</td><td class="action-col"><button data-id_product="'+product_id+'" class="btn btn-block btn-outline-primary-2 add-to-cart"><i class="icon-cart-plus"></i>Thêm vào giỏ hàng</button></td><td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td></tr>');
+                    $("#row_wishlist").append('<tr><td class="product-col"><div class="product"><input type="hidden" value="'+product_id+'" class="cart_product_id_'+product_id+'"><input type="hidden" id="wishlist_attrid'+product_id+'" value="'+attr_id+'" class="cart_attr_id_'+product_id+'"><input type="hidden" value="'+name+'" class="cart_product_name_'+product_id+'"><input type="hidden" value="'+valueImage+'" class="cart_product_image_'+product_id+'"><input type="hidden" value="'+price+'" class="cart_product_price_'+product_id+'"><input type="hidden" name="qty" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required><input type="hidden" value="1" class="cart_product_qty_'+product_id+'"><figure class="product-media"><a href="'+url+'"><img src="'+image+'" alt="Product image"></a></figure><h3 class="product-title"><a href="'+url+'">'+name+'</a></h3><!-- End .product-title --></div><!-- End .product --></td><td class="price-col">'+Intl.NumberFormat().format(price)+'đ</td><td class="action-col"><button data-id_product="'+product_id+'" class="btn btn-block btn-outline-primary-2 add-to-cart"><i class="icon-cart-plus"></i>Thêm vào giỏ hàng</button></td><td class="remove-col"><button class="btn-remove delete_wishlist" data-id="'+product_id+'"><i class="icon-close"></i></button></td></tr>');
                 }
             }
         }
         view();
+
         function add_wishlist(clicked_id){
             var product_id = clicked_id;
             var attr_id = document.getElementById('wishlist_attrid'+product_id).value;
@@ -445,7 +450,7 @@
             var oldData = JSON.parse(localStorage.getItem('data'));
 
             var matches = $.grep(oldData,function(obj){
-                return obj.product_id = product_id;
+                return obj.product_id == product_id;
             });
 
             if(matches.length){
@@ -455,6 +460,26 @@
             }
             localStorage.setItem('data',JSON.stringify(oldData));
         }
+    </script>
+
+    <script>
+        $(document).on('click','.delete_wishlist',function(event){
+            event.preventDefault(); // những hành động mặc định của sự kiện sẽ k xảy ra
+                var id = $(this).data('id');
+                if (localStorage.getItem('data') != null) {
+                    var data = JSON.parse(localStorage.getItem('data'));
+                    if (data.length) {
+                            for (var i = 0; i < data.length; i++) {
+                                if (data[i].product_id == id) {
+                                data.splice(i,1); //xóa phần tử khỏi mảng, tham số thứ 2 là 1 phần tử
+                            }
+                        }
+                    }
+
+                    localStorage.setItem('data',JSON.stringify(data));  //chuyển obj->string
+                    window.location.reload();
+                }
+        });
     </script>
 
     <script type="text/javascript">

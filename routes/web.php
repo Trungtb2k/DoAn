@@ -138,3 +138,11 @@ Route::post('/update-post/{post_id}', [BlogController::class,'update_post']);
 Route::get('/blog', [BlogController::class,'show_blog']);
 Route::get('/blog/{category_post_slug}', [BlogController::class,'category_post_slug']);
 Route::get('/blog-details/{post_meta_desc}', [BlogController::class,'blog_details']);
+
+//Filter Price
+Route::get('/duoi-2-trieu', [CategoryProduct::class,'duoi_2_trieu']);
+Route::get('/tu-2-4-trieu', [CategoryProduct::class,'tu_2_4_trieu']);
+Route::get('/tu-4-7-trieu', [CategoryProduct::class,'tu_4_7_trieu']);
+Route::get('/tu-7-13-trieu', [CategoryProduct::class,'tu_7_13_trieu']);
+Route::get('/tu-13-20-trieu', [CategoryProduct::class,'tu_13_20_trieu']);
+Route::get('/tren-20-trieu', [CategoryProduct::class,'tren_20_trieu']);

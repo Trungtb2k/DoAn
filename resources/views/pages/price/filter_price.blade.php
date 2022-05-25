@@ -1,10 +1,9 @@
 @extends('layout')
 @section('content')
 <main class="main">
-        @foreach($category_name as $key => $value)
-        	<div class="page-header text-center" style="background-image: url('../public/frontend/images/slide-3.png')">
+        	<div class="page-header text-center" style="background-image: url(public/frontend/images/slide-3.png)">
         		<div class="container">
-        			<h1 class="page-title">{{($value->category_name)}}<span>Sản phẩm</span></h1>
+        			<h1 class="page-title">Sản phẩm</h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
@@ -12,11 +11,10 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{URL::to('/Home')}}">Trang chủ</a></li>
                         <li class="breadcrumb-item"><a href="{{URL::to('/shop')}}">Sản phẩm</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{($value->category_name)}}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
-        @endforeach
+
             <div class="page-content">
                 <div class="container">
                 	<div class="row">
@@ -45,7 +43,7 @@
 
                             <div class="products mb-3">
                                 <div class="row justify-content-center">
-                                    @foreach($category_by_id as $key => $value)
+                                    @foreach($product as $key => $value)
                                         <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                                             <div class="product product-7 text-center">
                                             <form>
@@ -67,7 +65,7 @@
                                                     </div><!-- End .product-action-vertical -->
 
                                                     <div class="product-action">
-                                                    <a type="button" data-id_product="{{$value->product_id}}" class="btn-product btn-cart add-to-cart" name="add-to-cart"><span>Thêm vào giỏ hàng</span></a>
+                                                        <a type="button" data-id_product="{{$value->product_id}}" class="btn-product btn-cart add-to-cart" name="add-to-cart"><span>Thêm vào giỏ hàng</span></a>
                                                     </div><!-- End .product-action -->
                                                 </figure><!-- End .product-media -->
 
@@ -84,8 +82,9 @@
                                 </div><!-- End .row -->
                             </div><!-- End .products -->
 
-                            <nav aria-label="Page navigation" style="justify-content: center;display: flex;">
-                                {{ $category_by_id->links("pagination::bootstrap-4") }}
+
+                			<nav aria-label="Page navigation" style="justify-content: center;display: flex;">
+                                {{ $product->links("pagination::bootstrap-4") }}
 							</nav>
 
                 		</div><!-- End .col-lg-9 -->
@@ -109,7 +108,7 @@
 												<div class="filter-item">
                                                     @foreach($category as $key => $category)
                                                         <div class="custom-control custom-checkbox">
-                                                            <a href="{{URL::to('category-product/'.$category->category_id)}}"><label>{{($category->category_name)}}</label></a>
+                                                            <a href="{{URL::to('/category-product/'.$category->category_id)}}"><label>{{($category->category_name)}}</label></a>
                                                         </div><!-- End .custom-checkbox -->
                                                     @endforeach
 												</div><!-- End .filter-item -->

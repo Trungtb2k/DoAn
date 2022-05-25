@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 <main class="main">
-        	<div class="page-header text-center" style="background-image: url(public/frontend/images/slide-3.png)">
+        	<div class="page-header text-center" style="background-image: url('../public/frontend/images/slide-3.png')">
         		<div class="container">
         			<h1 class="page-title">Sản phẩm</h1>
         		</div><!-- End .container -->
@@ -164,22 +164,56 @@
         						<div class="widget widget-collapsible">
     								<h3 class="widget-title">
 									    <a data-toggle="collapse" href="#widget-5" role="button" aria-expanded="true" aria-controls="widget-5">
-									        Giá
+									        Khoảng giá
 									    </a>
 									</h3><!-- End .widget-title -->
 
-									<div class="collapse show" id="widget-5">
-										<div class="widget-body">
-                                            <div class="filter-price">
-                                                <div class="filter-price-text">
-                                                    Khoảng giá:
-                                                    <span id="filter-price-range"></span>
-                                                </div><!-- End .filter-price-text -->
+                                    <div class="collapse show" id="widget-4">
+                                        <div class="widget-body">
+                                            <div class="filter-items">
 
-                                                <div id="price-slider"></div><!-- End #price-slider -->
-                                            </div><!-- End .filter-price -->
-										</div><!-- End .widget-body -->
-									</div><!-- End .collapse -->
+                                                <div class="filter-item">
+                                                    <div class="custom-control custom-checkbox">
+                                                       <a href="{{URL::to('/duoi-2-trieu')}}"><label>Dưới 2 triệu</label></a>
+                                                    </div><!-- End .custom-checkbox -->
+                                                </div><!-- End .filter-item -->
+
+                                                <div class="filter-item">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <a href="{{URL::to('/tu-2-4-trieu')}}"><label>Từ 2 - 4 triệu</label></a>
+                                                    </div><!-- End .custom-checkbox -->
+                                                </div><!-- End .filter-item -->
+
+                                                <div class="filter-item">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <a href="{{URL::to('/tu-4-7-trieu')}}"><label>Từ 4 - 7 triệu</label></a>
+                                                    </div><!-- End .custom-checkbox -->
+                                                </div><!-- End .filter-item -->
+
+                                                <div class="filter-item">
+                                                    <div class="custom-control custom-checkbox">
+
+                                                       <a href="{{URL::to('/tu-7-13-trieu')}}"><label>Từ 7 - 13 triệu</label></a>
+                                                    </div><!-- End .custom-checkbox -->
+                                                </div><!-- End .filter-item -->
+
+                                                <div class="filter-item">
+                                                    <div class="custom-control custom-checkbox">
+
+                                                        <a href="{{URL::to('/tu-13-20-trieu')}}"><label>Từ 13 - 20 triệu</label></a>
+                                                    </div><!-- End .custom-checkbox -->
+                                                </div><!-- End .filter-item -->
+
+                                                <div class="filter-item">
+                                                    <div class="custom-control custom-checkbox">
+
+                                                        <a href="{{URL::to('/tren-20-trieu')}}"><label>Trên 20 triệu</label></a>
+                                                    </div><!-- End .custom-checkbox -->
+                                                </div><!-- End .filter-item -->
+
+                                            </div><!-- End .filter-items -->
+                                        </div><!-- End .widget-body -->
+                                    </div><!-- End .collapse -->
         						</div><!-- End .widget -->
                 			</div><!-- End .sidebar sidebar-shop -->
                 		</aside><!-- End .col-lg-3 -->

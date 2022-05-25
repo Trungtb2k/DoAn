@@ -109,26 +109,26 @@ class CategoryProduct extends Controller
         $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
         $list_product = DB::table('tbl_product')->where('product_status',0)
         ->orderBy('tbl_product.product_id','desc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-        ->where('tbl_product_attr.product_attr_status',0)->paginate(8);
+        ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->paginate(8);
 
         if(isset($_GET['sort_by'])){
             $sort_by = $_GET['sort_by'];
             if($sort_by=='kytu_za'){
                 $list_product = DB::table('tbl_product')->where('product_status',0)
                 ->orderBy('product_name','desc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->paginate(8);
             }elseif($sort_by=='kytu_az'){
                 $list_product =  DB::table('tbl_product')->where('product_status',0)
                 ->orderBy('product_name','asc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->paginate(8);
             }elseif($sort_by=='tang_dan'){
                 $list_product = DB::table('tbl_product')->where('product_status',0)
                 ->orderBy('product_price','asc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->paginate(8);
             }elseif($sort_by=='giam_dan'){
                 $list_product = DB::table('tbl_product')->where('product_status',0)
                 ->orderBy('product_price','desc')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->paginate(8);
             }
         }
 
@@ -143,7 +143,7 @@ class CategoryProduct extends Controller
         $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
         $category_by_id = DB::table('tbl_product')->join('tbl_category_product','tbl_product.category_id','=','tbl_category_product.category_id')
         ->where('tbl_product.category_id',$category_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-        ->where('tbl_product_attr.product_attr_status',0)->paginate(8);
+        ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->paginate(8);
         $category_name = DB::table('tbl_category_product')->where('tbl_category_product.category_id',$category_id)->limit(1)->get();
 
         if(isset($_GET['sort_by'])){
@@ -151,19 +151,19 @@ class CategoryProduct extends Controller
             if($sort_by=='kytu_za'){
                 $category_by_id =  DB::table('tbl_product')->join('tbl_category_product','tbl_product.category_id','=','tbl_category_product.category_id')
                 ->where('tbl_product.category_id',$category_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->orderBy('product_name','desc')->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->orderBy('product_name','desc')->paginate(8);
             }elseif($sort_by=='kytu_az'){
                 $category_by_id =  DB::table('tbl_product')->join('tbl_category_product','tbl_product.category_id','=','tbl_category_product.category_id')
                 ->where('tbl_product.category_id',$category_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->orderBy('product_name','asc')->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->orderBy('product_name','asc')->paginate(8);
             }elseif($sort_by=='tang_dan'){
                 $category_by_id =  DB::table('tbl_product')->join('tbl_category_product','tbl_product.category_id','=','tbl_category_product.category_id')
                 ->where('tbl_product.category_id',$category_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->orderBy('product_price','asc')->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->orderBy('product_price','asc')->paginate(8);
             }elseif($sort_by=='giam_dan'){
                 $category_by_id =  DB::table('tbl_product')->join('tbl_category_product','tbl_product.category_id','=','tbl_category_product.category_id')
                 ->where('tbl_product.category_id',$category_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->orderBy('product_price','desc')->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->orderBy('product_price','desc')->paginate(8);
             }
         }
 
@@ -178,7 +178,7 @@ class CategoryProduct extends Controller
         $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
         $brand_by_id = DB::table('tbl_product')->join('tbl_brand','tbl_product.brand_id','=','tbl_brand.brand_id')
         ->where('tbl_product.brand_id',$brand_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-        ->where('tbl_product_attr.product_attr_status',0)->paginate(8);
+        ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->paginate(8);
         $brand_name = DB::table('tbl_brand')->where('tbl_brand.brand_id',$brand_id)->limit(1)->get();
 
         if(isset($_GET['sort_by'])){
@@ -186,19 +186,19 @@ class CategoryProduct extends Controller
             if($sort_by=='kytu_za'){
                 $brand_by_id = DB::table('tbl_product')->join('tbl_brand','tbl_product.brand_id','=','tbl_brand.brand_id')
                 ->where('tbl_product.brand_id',$brand_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->orderBy('product_name','desc')->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->orderBy('product_name','desc')->paginate(8);
             }elseif($sort_by=='kytu_az'){
                 $brand_by_id =  DB::table('tbl_product')->join('tbl_brand','tbl_product.brand_id','=','tbl_brand.brand_id')
                 ->where('tbl_product.brand_id',$brand_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->orderBy('product_name','asc')->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->orderBy('product_name','asc')->paginate(8);
             }elseif($sort_by=='tang_dan'){
                 $brand_by_id = DB::table('tbl_product')->join('tbl_brand','tbl_product.brand_id','=','tbl_brand.brand_id')
                 ->where('tbl_product.brand_id',$brand_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->orderBy('product_price','asc')->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->orderBy('product_price','asc')->paginate(8);
             }elseif($sort_by=='giam_dan'){
                 $brand_by_id =DB::table('tbl_product')->join('tbl_brand','tbl_product.brand_id','=','tbl_brand.brand_id')
                 ->where('tbl_product.brand_id',$brand_id)->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('tbl_product_attr.product_attr_status',0)->orderBy('product_price','desc')->paginate(8);
+                ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_quantity','>','0')->orderBy('product_price','desc')->paginate(8);
             }
         }
 
@@ -212,26 +212,201 @@ class CategoryProduct extends Controller
         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
         $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
         $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-        ->where('attr_id',$attr_id)->paginate(8);
+        ->where('attr_id',$attr_id)->where('tbl_product.product_quantity','>','0')->paginate(8);
 
         if(isset($_GET['sort_by'])){
             $sort_by = $_GET['sort_by'];
             if($sort_by=='kytu_za'){
                 $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-                ->where('attr_id',$attr_id)->orderBy('product_name','desc')->paginate(8);
+                ->where('attr_id',$attr_id)->where('tbl_product.product_quantity','>','0')->orderBy('product_name','desc')->paginate(8);
             }elseif($sort_by=='kytu_az'){
                 $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-        ->where('attr_id',$attr_id)->orderBy('product_name','asc')->paginate(8);
+                ->where('attr_id',$attr_id)->where('tbl_product.product_quantity','>','0')->orderBy('product_name','asc')->paginate(8);
             }elseif($sort_by=='tang_dan'){
                 $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-        ->where('attr_id',$attr_id)->orderBy('product_price','asc')->paginate(8);
+                ->where('attr_id',$attr_id)->where('tbl_product.product_quantity','>','0')->orderBy('product_price','asc')->paginate(8);
             }elseif($sort_by=='giam_dan'){
                 $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-        ->where('attr_id',$attr_id)->orderBy('product_price','desc')->paginate(8);
+                ->where('attr_id',$attr_id)->where('tbl_product.product_quantity','>','0')->orderBy('product_price','desc')->paginate(8);
             }
         }
 
         return view('pages.memory.show_memory_details')->with('category',$cate_product)
+        ->with('brand',$brand_product)->with('product',$product)->with('attr_name',$attr_name);
+    }
+
+    //Filter Price
+
+    public function duoi_2_trieu(){
+        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
+        $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
+        $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
+        $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[0,2000000])
+        ->where('tbl_product.product_quantity','>','0')->paginate(8);
+
+        if(isset($_GET['sort_by'])){
+            $sort_by = $_GET['sort_by'];
+            if($sort_by=='kytu_za'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[0,2000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_name','desc')->paginate(8);
+            }elseif($sort_by=='kytu_az'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[0,2000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_name','asc')->paginate(8);
+            }elseif($sort_by=='tang_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[0,2000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_price','asc')->paginate(8);
+            }elseif($sort_by=='giam_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[0,2000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_price','desc')->paginate(8);
+            }
+        }
+
+        return view('pages.price.filter_price')->with('category',$cate_product)
+        ->with('brand',$brand_product)->with('product',$product)->with('attr_name',$attr_name);
+    }
+
+    public function tu_2_4_trieu(){
+        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
+        $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
+        $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
+        $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[2000000,4000000])
+        ->where('tbl_product.product_quantity','>','0')->paginate(8);
+
+        if(isset($_GET['sort_by'])){
+            $sort_by = $_GET['sort_by'];
+            if($sort_by=='kytu_za'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[2000000,4000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_name','desc')->paginate(8);
+            }elseif($sort_by=='kytu_az'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[2000000,4000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_name','asc')->paginate(8);
+            }elseif($sort_by=='tang_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[2000000,4000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_price','asc')->paginate(8);
+            }elseif($sort_by=='giam_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[2000000,4000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_price','desc')->paginate(8);
+            }
+        }
+
+        return view('pages.price.filter_price')->with('category',$cate_product)
+        ->with('brand',$brand_product)->with('product',$product)->with('attr_name',$attr_name);
+    }
+
+    public function tu_4_7_trieu(){
+        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
+        $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
+        $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
+        $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[4000000,7000000])
+        ->where('tbl_product.product_quantity','>','0')->paginate(8);
+
+        if(isset($_GET['sort_by'])){
+            $sort_by = $_GET['sort_by'];
+            if($sort_by=='kytu_za'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[4000000,7000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_name','desc')->paginate(8);
+            }elseif($sort_by=='kytu_az'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[4000000,7000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_name','asc')->paginate(8);
+            }elseif($sort_by=='tang_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[4000000,7000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_price','asc')->paginate(8);
+            }elseif($sort_by=='giam_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[4000000,7000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_price','desc')->paginate(8);
+            }
+        }
+
+        return view('pages.price.filter_price')->with('category',$cate_product)
+        ->with('brand',$brand_product)->with('product',$product)->with('attr_name',$attr_name);
+    }
+
+    public function tu_7_13_trieu(){
+        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
+        $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
+        $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
+        $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[7000000,13000000])->where('tbl_product.product_quantity','>','0')->paginate(8);
+
+        if(isset($_GET['sort_by'])){
+            $sort_by = $_GET['sort_by'];
+            if($sort_by=='kytu_za'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[7000000,13000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_name','desc')->paginate(8);
+            }elseif($sort_by=='kytu_az'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[7000000,13000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_name','asc')->paginate(8);
+            }elseif($sort_by=='tang_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[7000000,13000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_price','asc')->paginate(8);
+            }elseif($sort_by=='giam_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[7000000,13000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_price','desc')->paginate(8);
+            }
+        }
+
+        return view('pages.price.filter_price')->with('category',$cate_product)
+        ->with('brand',$brand_product)->with('product',$product)->with('attr_name',$attr_name);
+    }
+
+    public function tu_13_20_trieu(){
+        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
+        $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
+        $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
+        $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[13000000,20000000])
+        ->where('tbl_product.product_quantity','>','0')->paginate(8);
+
+        if(isset($_GET['sort_by'])){
+            $sort_by = $_GET['sort_by'];
+            if($sort_by=='kytu_za'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[13000000,20000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_name','desc')->paginate(8);
+            }elseif($sort_by=='kytu_az'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[13000000,20000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_name','asc')->paginate(8);
+            }elseif($sort_by=='tang_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[13000000,20000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_price','asc')->paginate(8);
+            }elseif($sort_by=='giam_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->whereBetween('product_price',[13000000,20000000])->where('tbl_product.product_quantity','>','0')->orderBy('product_price','desc')->paginate(8);
+            }
+        }
+
+        return view('pages.price.filter_price')->with('category',$cate_product)
+        ->with('brand',$brand_product)->with('product',$product)->with('attr_name',$attr_name);
+    }
+
+    public function tren_20_trieu(){
+        $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderBy('category_id','desc')->get();
+        $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderBy('brand_id','desc')->get();
+        $attr_name = DB::table('tbl_attr')->orderBy('attr_id','asc')->limit(6)->get();
+        $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('tbl_product_attr.product_attr_status',0)->where('product_price','>',20000000)
+        ->where('tbl_product.product_quantity','>','0')->paginate(8);
+
+        if(isset($_GET['sort_by'])){
+            $sort_by = $_GET['sort_by'];
+            if($sort_by=='kytu_za'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->where('product_price','>',20000000)->where('tbl_product.product_quantity','>','0')->orderBy('product_name','desc')->paginate(8);
+            }elseif($sort_by=='kytu_az'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->where('product_price','>',20000000)->where('tbl_product.product_quantity','>','0')->orderBy('product_name','asc')->paginate(8);
+            }elseif($sort_by=='tang_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->where('product_price','>',20000000)->where('tbl_product.product_quantity','>','0')->orderBy('product_price','asc')->paginate(8);
+            }elseif($sort_by=='giam_dan'){
+                $product= DB::table('tbl_product')->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+                ->where('tbl_product_attr.product_attr_status',0)->where('product_price','>',20000000)->where('tbl_product.product_quantity','>','0')->orderBy('product_price','desc')->paginate(8);
+            }
+        }
+
+        return view('pages.price.filter_price')->with('category',$cate_product)
         ->with('brand',$brand_product)->with('product',$product)->with('attr_name',$attr_name);
     }
 

@@ -15,7 +15,7 @@ class HomeController extends Controller
 
         $list_product = DB::table('tbl_product')->where('product_status',0)
         ->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-        ->where('tbl_product_attr.product_attr_status',0)->limit(6)->get();
+        ->where('tbl_product_attr.product_attr_status',0)->orderBy('tbl_product.product_sold')->limit(6)->get();
 
         $list_product1 = DB::table('tbl_product')->where('product_status',0)
         ->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
