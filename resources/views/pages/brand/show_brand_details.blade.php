@@ -62,8 +62,7 @@
                                                     </a>
 
                                                     <div class="product-action-vertical">
-                                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Yêu thích</span></a>
-                                                        <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>So sánh</span></a>
+                                                        <button class="btn-product-icon btn-wishlist" id="{{$value->product_id}}" onclick="add_wishlist(this.id);"><span>Yêu thích</span></button>
                                                     </div><!-- End .product-action-vertical -->
 
                                                     <div class="product-action">

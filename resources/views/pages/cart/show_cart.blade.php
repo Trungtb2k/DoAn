@@ -138,6 +138,7 @@
                                     <?php
                                     use Illuminate\Support\Facades\Session;
                                     $cart_checkout = Session::get('cart');
+
                                     if($cart_checkout!=Null){
                                     ?>
                                         <a href="{{URL::to('/checkout')}}" class="btn btn-outline-primary-2 btn-order btn-block">Thanh toán</a>

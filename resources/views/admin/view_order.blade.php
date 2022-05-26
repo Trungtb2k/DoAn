@@ -1,7 +1,6 @@
 @extends('admin.admin_layout')
 @section('admin_content')
-<section id="main-content">
-	<section class="wrapper">
+
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -46,6 +45,7 @@
             <th>Tên sản phẩm</th>
             <th>Bộ nhớ</th>
             <th>Số lượng</th>
+            <th>Ngày đặt hàng</th>
             <th>Giá</th>
             <th>Thành tiền</th>
 
@@ -65,6 +65,7 @@
             ?>
             <td>{{$row['attr_name']}}</td>
             <td>{{$v_content->product_sales_quantity}}</td>
+            <td>{{$v_content->order_date}}</td>
             <input type="hidden" name="product_sales_quantity" value="{{$v_content->product_sales_quantity}}">
             <input type="hidden" name="order_product_id" class="order_product_id" value="{{$v_content->product_id}}">
             <td>{{number_format($v_content->product_price)}} đ</td>

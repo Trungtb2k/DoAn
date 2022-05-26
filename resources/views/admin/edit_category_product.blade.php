@@ -1,7 +1,5 @@
 @extends('admin.admin_layout')
 @section('admin_content')
-<section id="main-content">
-	<section class="wrapper">
 	<div class="form-w3layouts">
         <!-- page start-->
         <!-- page start-->
@@ -39,5 +37,4 @@
             </div>
         </div>
         </div>
-</section>
 @endsection

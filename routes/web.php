@@ -146,3 +146,8 @@ Route::get('/tu-4-7-trieu', [CategoryProduct::class,'tu_4_7_trieu']);
 Route::get('/tu-7-13-trieu', [CategoryProduct::class,'tu_7_13_trieu']);
 Route::get('/tu-13-20-trieu', [CategoryProduct::class,'tu_13_20_trieu']);
 Route::get('/tren-20-trieu', [CategoryProduct::class,'tren_20_trieu']);
+
+
+Route::post('/filter-by-date',[AdminController::class,'filter_by_date']);
+Route::post('/dashboard-filter',[AdminController::class,'dashboard_filter']);
+Route::post('/days-order',[AdminController::class,'day_orders']);
