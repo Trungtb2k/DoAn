@@ -249,7 +249,7 @@ class CheckoutController extends Controller
 
         //order date
         $order_date = $order->order_date;
-        $statistic = Statistic::where('order_status',$order_date)->get();
+        $statistic = Statistic::where('order_date',$order_date)->get();
         if($statistic){
             $statistic_count = $statistic->count();
         }else{
@@ -261,12 +261,19 @@ class CheckoutController extends Controller
             $sales = 0;
             $profit = 0;
             $quantity = 0;
+            $product_price = 0;
             foreach($data['order_product_id'] as $key=>$product_id){
                 $product = Product::find($product_id);
                 $product_quantity = $product->product_quantity;
                 $product_sold = $product->product_sold;
 
-                $product_price = $product->product_price;
+                foreach($data['order_attr_id'] as $key3=>$attr_id){
+                    if($key==$key3){
+                        $attr=DB::table('tbl_product_attr')->where('product_id',$product_id)->where('attr_id',$attr_id)->first();
+                        $product_price = $attr->product_price;
+                    }
+
+                }
                 $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
 
                 foreach($data['quantity'] as $key2=>$qty){

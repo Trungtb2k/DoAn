@@ -45,4 +45,16 @@ class HomeController extends Controller
     public function wishlist(){
         return view('pages.wishlist');
     }
+
+    public function about(){
+        return view('pages.about');
+    }
+
+    public function contact(){
+        return view('pages.contact');
+    }
+
+    public function error_page(){
+        return view('error.404');
+    }
 }

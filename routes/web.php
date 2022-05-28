@@ -27,7 +27,10 @@ use Illuminate\Support\Facades\Route;
 //FrontEnd
 Route::get('/',[HomeController::class,'index']);
 Route::get('/Home',[HomeController::class,'index']);
+Route::get('/404',[HomeController::class,'error_page']);
 Route::post('/search',[HomeController::class,'search']);
+Route::get('/about',[HomeController::class,'about']);
+Route::get('/contact',[HomeController::class,'contact']);
 
 //BackEnd
 Route::get('/Admin',[AdminController::class,'index']);
@@ -151,3 +154,5 @@ Route::get('/tren-20-trieu', [CategoryProduct::class,'tren_20_trieu']);
 Route::post('/filter-by-date',[AdminController::class,'filter_by_date']);
 Route::post('/dashboard-filter',[AdminController::class,'dashboard_filter']);
 Route::post('/days-order',[AdminController::class,'day_orders']);
+
+

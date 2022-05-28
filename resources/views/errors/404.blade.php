@@ -149,7 +149,27 @@
             </div><!-- End .header-middle -->
         </header><!-- End .header -->
 
-        @yield('content')
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{Url::to('/Home')}}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">404</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+        	<div class="error-content text-center" style="background-image: url(public/frontend/images/error-bg.jpg)">
+            	<div class="container">
+            		<h1 class="error-title">Error 404</h1><!-- End .error-title -->
+            		<p>Xin lỗi, chúng tôi không tìm thấy trang mà bạn cần!</p>
+            		<a href="{{URL::to('/Home')}}" class="btn btn-outline-primary-2 btn-minwidth-lg">
+            			<span>Trở về trang chủ</span>
+            			<i class="icon-long-arrow-right"></i>
+            		</a>
+            	</div><!-- End .container -->
+        	</div><!-- End .error-content text-center -->
+        </main><!-- End .main -->
 
 
         <footer class="footer">
@@ -288,217 +308,7 @@
     <script src="{{asset('public/frontend/js/lightgallery-all.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/prettify.js')}}"></script>
     <script src="{{asset('public/frontend/js/sweetalert.min.js')}}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#imageGallery').lightSlider({
-                gallery:true,
-                item:1,
-                loop:true,
-                thumbItem:5,
-                slideMargin:0,
-                enableDrag: false,
-                currentPagerPosition:'left',
-                onSliderLoad: function(el) {
-                    el.lightGallery({
-                        selector: '#imageGallery .lslide'
-                    });
-                }
-            });
-          });
-    </script>
-
-    <script type="text/javascript">
-            $(".show-more button").on("click", function() {
-                var $this = $(this);
-                var $content = $this.parent().prev("div.content");
-                var linkText = $this.text().toUpperCase();
-
-                if(linkText === "XEM THÊM"){
-                    linkText = "Ẩn bớt";
-                    $content.switchClass("hideContent", "showContent", 400);
-                } else {
-                    linkText = "Xem thêm";
-                    $content.switchClass("showContent", "hideContent", 400);
-                };
-
-                $this.text(linkText);
-            });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function(){
-            load_comment();
-
-            function load_comment(){
-                var product_id = $('.comment_product_id').val();
-                var _token = $('input[name="_token"]').val();
-
-                $.ajax({
-                    url:"{{url('/load-comment')}}",
-                    method:"POST",
-                    data:{product_id:product_id, _token:_token},
-                    success:function(data){
-                        $('#comment_show').html(data);
-                    }
-                });
-            }
-            var star = '';
-                $(".rate").click(function(){
-                star = document.querySelector('input[name="rate"]:checked').value;;
-                });
-
-            $('.send-comment').click(function(){
-                var product_id = $('.comment_product_id').val();
-                var comment_name = $('.comment_name').val();
-                var comment = $('.comment').val();
-                var comment_phone = $('.comment_phone').val();
-                var comment_date = new Date().toLocaleDateString();
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    url:"{{url('/send-comment')}}",
-                    method:"POST",
-                    data:{product_id:product_id, _token:_token,comment_name:comment_name,comment:comment,
-                    comment_phone:comment_phone,star:star,comment_date:comment_date},
-                    success:function(data){
-                        alert("Đánh giá của bạn sẽ được hệ thống kiểm duyệt.Xin cảm ơn!");
-                        load_comment();
-                    }
-                });
-            });
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(".add-to-cart").click(function(){
-                var id = $(this).data('id_product');
-                var cart_product_id = $('.cart_product_id_'+id).val();
-                var cart_product_name = $('.cart_product_name_'+id).val();
-                var cart_attr_id = $('.cart_attr_id_'+id).val();
-                var cart_product_image = $('.cart_product_image_'+id).val();
-                var cart_product_price = $('.cart_product_price_'+id).val();
-                //var cart_product_qty = $('.cart_product_qty_'+id).val();
-                var cart_product_qty = document.getElementById("qty").value;
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    url:"{{url('/add-cart-ajax')}}",
-                    method:"POST",
-                    data:{cart_product_id:cart_product_id,cart_attr_id:cart_attr_id,
-                        cart_product_name:cart_product_name,cart_product_image:cart_product_image
-                        ,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
-                    success:function(data){
-                        // swal({
-                        //         title: "Đã thêm sản phẩm vào giỏ hàng",
-                        //         text: "Bạn có thể tiếp tục mua sắm hoặc tới giỏ hàng để thanh toán",
-                        //         showCancelButton: true,
-                        //         cancelButtonText: "Tiếp tục",
-                        //         confirmButtonClass: "btn-success",
-                        //         confirmButtonText: "Đi đến giỏ hàng",
-                        //         closeOnConfirm: false
-                        //     },
-                        //    function() {
-                                window.location.href = "{{url('/show-cart')}}";
-                            // });
-                    }
-                });
-            });
-        });
-    </script>
-
-    <script type="text/javascript">
-        function view(){
-            if(localStorage.getItem('data')!=null){
-                var data = JSON.parse(localStorage.getItem('data'));
-                for(i=0;i<data.length;i++){
-                    var product_id = data[i].product_id;
-                    var attr_id = data[i].attr_id;
-                    var name = data[i].name;
-                    var price = data[i].price;
-                    var image = data[i].image;
-                    var url = data[i].url;
-                    var valueImage = data[i].valueImage;
-                    $("#row_wishlist").append('<tr><td class="product-col"><div class="product"><input type="hidden" value="'+product_id+'" class="cart_product_id_'+product_id+'"><input type="hidden" id="wishlist_attrid'+product_id+'" value="'+attr_id+'" class="cart_attr_id_'+product_id+'"><input type="hidden" value="'+name+'" class="cart_product_name_'+product_id+'"><input type="hidden" value="'+valueImage+'" class="cart_product_image_'+product_id+'"><input type="hidden" value="'+price+'" class="cart_product_price_'+product_id+'"><input type="hidden" name="qty" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required><input type="hidden" value="1" class="cart_product_qty_'+product_id+'"><figure class="product-media"><a href="'+url+'"><img src="'+image+'" alt="Product image"></a></figure><h3 class="product-title"><a href="'+url+'">'+name+'</a></h3><!-- End .product-title --></div><!-- End .product --></td><td class="price-col">'+Intl.NumberFormat().format(price)+'đ</td><td class="action-col"><button data-id_product="'+product_id+'" class="btn btn-block btn-outline-primary-2 add-to-cart"><i class="icon-cart-plus"></i>Thêm vào giỏ hàng</button></td><td class="remove-col"><button class="btn-remove delete_wishlist" data-id="'+product_id+'"><i class="icon-close"></i></button></td></tr>');
-                }
-            }
-        }
-        view();
-
-        function add_wishlist(clicked_id){
-            var product_id = clicked_id;
-            var attr_id = document.getElementById('wishlist_attrid'+product_id).value;
-            var name = document.getElementById('wishlist_productname'+product_id).value;
-            var price = document.getElementById('wishlist_productprice'+product_id).value;
-            var image = document.getElementById('wishlist_productimage'+product_id).src;
-            var url = document.getElementById('wishlist_producturl'+product_id).href;
-            var valueImage = document.getElementById('wishlist_valueimage'+product_id).value;
-            var newItem = {
-                'url':url,
-                'product_id':product_id,
-                'attr_id':attr_id,
-                'name':name,
-                'price':price,
-                'image':image,
-                'valueImage':valueImage,
-            }
-
-            if(localStorage.getItem('data')==null){
-                localStorage.setItem('data','[]');
-            }
-
-            var oldData = JSON.parse(localStorage.getItem('data'));
-
-            var matches = $.grep(oldData,function(obj){
-                return obj.product_id == product_id;
-            });
-
-            if(matches.length){
-                alert('Đã tồn tại trong danh mục yêu thích');
-            }else{
-                oldData.push(newItem);
-            }
-            localStorage.setItem('data',JSON.stringify(oldData));
-        }
-    </script>
-
-    <script>
-        $(document).on('click','.delete_wishlist',function(event){
-            event.preventDefault(); // những hành động mặc định của sự kiện sẽ k xảy ra
-                var id = $(this).data('id');
-                if (localStorage.getItem('data') != null) {
-                    var data = JSON.parse(localStorage.getItem('data'));
-                    if (data.length) {
-                            for (var i = 0; i < data.length; i++) {
-                                if (data[i].product_id == id) {
-                                data.splice(i,1); //xóa phần tử khỏi mảng, tham số thứ 2 là 1 phần tử
-                            }
-                        }
-                    }
-
-                    localStorage.setItem('data',JSON.stringify(data));  //chuyển obj->string
-                    window.location.reload();
-                }
-        });
-    </script>
-
-    <script type="text/javascript">
-        $('.collapsed').on('change',function(){
-            $('.collapsed').not(this).prop('checked',false);
-        });
-    </script>
-
-        <!-- Sort -->
-    <script type="text/javascript">
-         $("#sort").on("change",function(){
-             var url  = $(this).val();
-             if(url){
-                 window.location = url;
-             }
-             return false;
-         });
-    </script>
-
 </body>
 
 
-<!-- molla/index.html  22 Nov 2019 09:55:42 GMT -->
 </html>

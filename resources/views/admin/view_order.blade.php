@@ -68,6 +68,7 @@
             <td>{{$v_content->order_date}}</td>
             <input type="hidden" name="product_sales_quantity" value="{{$v_content->product_sales_quantity}}">
             <input type="hidden" name="order_product_id" class="order_product_id" value="{{$v_content->product_id}}">
+            <input type="hidden" name="order_attr_id" class="order_attr_id" value="{{$v_content->attr_id}}">
             <td>{{number_format($v_content->product_price)}} đ</td>
             <td>{{number_format($v_content->product_price*$v_content->product_sales_quantity)}} đ</td>
           </tr>
@@ -153,7 +154,7 @@
             @elseif($status->order_status==5)
                 <form>
                     @csrf
-                    <select class="form-control order_details">
+                    <select class="form-control order_details" disabled>
                         <option id="{{$status->order_id}}" value="0">Đang xử lý</option>
                         <option id="{{$status->order_id}}" value="1">Đã được xử lý</option>
                         <option id="{{$status->order_id}}" value="2">Vận chuyển</option>

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\Post;
 use App\Models\CatePost;
 use App\Models\Gallery;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
 class BlogController extends Controller
@@ -41,6 +42,7 @@ class BlogController extends Controller
         $post->post_content = $data['post_content'];
         $post->category_post_id = $data['category_post_id'];
         $post->post_status = $data['post_status'];
+        $post->created_date = Carbon::now('Asia/Ho_Chi_Minh')->format('m/d/y');
 
         $get_image = $request->file('post_image');
         $get_name_image = $get_image->getClientOriginalExtension();
@@ -110,7 +112,7 @@ class BlogController extends Controller
     //FrontEnd
     public function show_blog(){
         $category_post = DB::table('tbl_category_post')->where('category_post_status','0')->get();
-        $post = DB::table('tbl_post')->orderBy('post_id','desc')->get();
+        $post = DB::table('tbl_post')->orderBy('post_id','desc')->paginate(6);
         return view('pages.blog.show_blog')->with('category_post',$category_post)->with('post',$post);
     }
 

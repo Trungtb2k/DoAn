@@ -39,10 +39,10 @@
                                     <div class="entry-body">
                                         <div class="entry-meta">
                                             <span class="entry-author">
-                                                by <a href="#">Admin</a>
+                                                Bởi <a href="#">Admin</a>
                                             </span>
                                             <span class="meta-separator">|</span>
-                                            <a href="#">Nov 22, 2018</a>
+                                            <a href="#">{{$value->created_date}}</a>
                                         </div><!-- End .entry-meta -->
 
                                         <h2 class="entry-title">
@@ -56,7 +56,7 @@
 
                                         <div class="entry-content">
                                             <p>{!!$value->post_desc!!}</p>
-                                            <a href="{{URL::to('/blog-details/'.$value->post_slug)}}" class="read-more">Continue Reading</a>
+                                            <a href="{{URL::to('/blog-details/'.$value->post_slug)}}" class="read-more">Tiếp tục đọc</a>
                                         </div><!-- End .entry-content -->
                                     </div><!-- End .entry-body -->
                                 </article><!-- End .entry -->
@@ -65,22 +65,9 @@
                 	</div><!-- End .entry-container -->
 
 
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                                    <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
-                                </a>
-                            </li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item">
-                                <a class="page-link page-link-next" href="#" aria-label="Next">
-                                    Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <nav aria-label="Page navigation" style="justify-content: center;display: flex;">
+                                {{ $post->links("pagination::bootstrap-4") }}
+					</nav>
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
