@@ -3,7 +3,7 @@
 		<div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      List Coupon
+      Danh sách mã giảm giá
     </div>
 
     <div class="table-responsive">
@@ -14,10 +14,14 @@
               <label class="i-checks m-b-none">
               </label>
             </th>
-            <th>Coupon Name</th>
-            <th>Coupon Code</th>
-            <th>Coupon Time</th>
-            <th>Coupon Discount</th>
+            <th>Tên mã giảm giá</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày hết hạn</th>
+            <th>Mã giảm giá</th>
+            <th>Số lượng</th>
+            <th>Số giảm</th>
+            <th>Tình trạng</th>
+            <th>Hết hạn</th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
@@ -26,9 +30,37 @@
           <tr>
             <td><label class="i-checks m-b-none"><i></i></label></td>
             <td>{{$cou->coupon_name}}</td>
+            <td>{{$cou->coupon_date_start}}</td>
+            <td>{{$cou->coupon_date_end}}</td>
             <td>{{$cou->coupon_code}}</td>
             <td>{{$cou->coupon_time}}</td>
-            <td>{{$cou->coupon_discount}}</td>
+            <td>{{$cou->coupon_discount}}%</td>
+            <td><span class="text-ellipsis">
+            <?php
+                if($cou->coupon_status==0){
+                   ?>
+                <a href="{{URL::to('/unactive-coupon/'.$cou->coupon_id)}}"><span>Có hiệu lực</span></a>
+                <?php
+                }else{
+                ?>
+                <a href="{{URL::to('/active-coupon/'.$cou->coupon_id)}}"><span>Hết hiệu lực</span></a>
+                <?php
+                }
+                ?>
+            </span></td>
+            <td>
+                <?php
+                    if($cou->coupon_date_end>$today){
+                        ?>
+                        <span>Còn hạn</span>
+                    <?php
+                   }else{
+                    ?>
+                        <span>Hết hạn</span>
+                        <?php
+                    }
+                ?>
+            </td>
             <td>
                 <a href="{{URL::to('/delete-coupon/'.$cou->coupon_id)}}" class="active" ui-toggle-class="">
                   <i class="fa fa-times text-danger text"></i>

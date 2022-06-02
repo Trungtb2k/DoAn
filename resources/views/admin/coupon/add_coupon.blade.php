@@ -19,6 +19,16 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Ngày bắt đầu</label>
+                                    <input type="text" name="coupon_date_start" id="datepicker3" class="form-control" id="exampleInputEmail1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Ngày kết thúc</label>
+                                    <input type="text" name="coupon_date_end" id="datepicker4" class="form-control" id="exampleInputEmail1">
+                                </div>
+
+                                <div class="form-group">
                                     <label for="exampleInputPassword1">Coupon Code</label>
                                     <input type="text" name="coupon_code" class="form-control" id="exampleInputEmail1">
                                 </div>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 use App\Models\Coupon;
 
 session_start();
@@ -89,7 +90,9 @@ class CartController extends Controller
             }
             Session::put('cart', $cart);
         }
-        $coupon = Coupon::where('coupon_code', $data['coupon'])->first();
+        $today = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        $coupon = Coupon::where('coupon_code', $data['coupon'])->where('coupon_status',0)
+        ->where('coupon_date_start','<=',$today)->where('coupon_date_end','>=',$today)->first();
         if ($coupon) {
             $count_coupon = $coupon->count();
             if ($count_coupon) {
@@ -113,6 +116,7 @@ class CartController extends Controller
                     Session::put('coupon', $cou);
                 }
                 Session::save();
+                DB::table('tbl_coupon')->where('coupon_id',$coupon->coupon_id)->update(['coupon_time'=>$coupon->coupon_time-1]);
                 return redirect()->back();
             }
         } else {

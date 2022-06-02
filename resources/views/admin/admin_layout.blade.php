@@ -227,6 +227,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 $("#datepicker2").datepicker({
                     dateFormat: "yy-mm-dd"
                 });
+
+                $("#datepicker3").datepicker({
+                    dateFormat: "yy-mm-dd"
+                });
+
+                $("#datepicker4").datepicker({
+                    dateFormat: "yy-mm-dd"
+                });
             });
         </script>
 

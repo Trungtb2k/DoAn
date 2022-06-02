@@ -47,7 +47,7 @@
 	            						<input type="text" name="shipping_address" class="form-control" required>
 
 	                					<label>Email *</label>
-	        							<input type="email" name="shipping_email" class="form-control" required>
+	        							<input type="email" name="shipping_email" class="form-control" pattern=".+@gmail\.com" required>
 	                					<label>Yêu cầu khác (không bắt buộc)</label>
 	        							<textarea class="form-control" name="shipping_notes" cols="30" rows="4" placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: lưu ý đặc biệt để giao hàng"></textarea>
 		                		</div><!-- End .col-lg-9 -->

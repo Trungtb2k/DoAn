@@ -189,7 +189,7 @@
 
                                         <div class="col-md-6">
                                             <label for="reply-email" class="sr-only">Số điện thoại</label>
-                                            <input type="text" class="form-control comment_phone" id="reply-email" name="reply-email" required placeholder="Số điện thoại *">
+                                            <input type="text" class="form-control comment_phone" id="reply-email" name="reply-email" pattern="([0]\d{9,})" required placeholder="Số điện thoại *">
                                         </div><!-- End .col-md-6 -->
                                     </div><!-- End .row -->
 

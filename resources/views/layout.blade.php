@@ -354,16 +354,19 @@
                 var comment_phone = $('.comment_phone').val();
                 var comment_date = new Date().toLocaleDateString();
                 var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    url:"{{url('/send-comment')}}",
-                    method:"POST",
-                    data:{product_id:product_id, _token:_token,comment_name:comment_name,comment:comment,
-                    comment_phone:comment_phone,star:star,comment_date:comment_date},
-                    success:function(data){
-                        alert("Đánh giá của bạn sẽ được hệ thống kiểm duyệt.Xin cảm ơn!");
-                        load_comment();
-                    }
-                });
+                if(product_id != '' && comment_name != '' && comment != '' && comment_phone.matches(/([0]\d{9,})/)){
+                        $.ajax({
+                        url:"{{url('/send-comment')}}",
+                        method:"POST",
+                        data:{product_id:product_id, _token:_token,comment_name:comment_name,comment:comment,
+                        comment_phone:comment_phone,star:star,comment_date:comment_date},
+                        success:function(data){
+                            alert("Đánh giá của bạn sẽ được hệ thống kiểm duyệt.Xin cảm ơn!");
+                            load_comment();
+                        }
+                    });
+                }
+
             });
         });
     </script>
