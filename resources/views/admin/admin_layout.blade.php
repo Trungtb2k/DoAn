@@ -31,7 +31,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- calendar -->
     <link rel="stylesheet" href="{{asset('public/backend/css/monthly.css')}}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     <!-- //calendar -->
     <!-- //font-awesome icons -->
     <script src="{{asset('public/backend/js/jquery2.0.3.min.js')}}"></script>
@@ -214,20 +213,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
         <script src="{{asset('public/backend/js/jquery.scrollTo.js')}}"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
 
         <script type="text/javascript">
             $(function() {
-                $("#datepicker").datepicker({
-                    dateFormat: "yy-mm-dd"
-                });
-
-                $("#datepicker2").datepicker({
-                    dateFormat: "yy-mm-dd"
-                });
-
                 $("#datepicker3").datepicker({
                     dateFormat: "yy-mm-dd"
                 });
@@ -238,70 +227,142 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             });
         </script>
 
-        <script type="text/javascript">
-            $(document).ready(function(){
-                chart30daysorder();
-                var chart = new Morris.Line({
-                    element: 'myfirstchart',
-                    //option
-                    lineColors: ['#888bf7', '#75ff00', '#FF6541', '#ff0000', '#766856'],
-                    pointFillColors: ['#ffffff'],
-                    pointStrokeColors: ['black'],
-                        fillOpacity: 0.3,
-                        hideHover: 'auto',
-                        parseTime: false,
-                    xkey: 'period',
-                    ykeys: ['order','sales','profit','quantity'],
+        <script>
+            $(document).ready(function() {
+                //BOX BUTTON SHOW AND CLOSE
+                jQuery('.small-graph-box').hover(function() {
+                    jQuery(this).find('.box-button').fadeIn('fast');
+                }, function() {
+                    jQuery(this).find('.box-button').fadeOut('fast');
+                });
+                jQuery('.small-graph-box .box-close').click(function() {
+                    jQuery(this).closest('.small-graph-box').fadeOut(200);
+                    return false;
+                });
+
+                //CHARTS
+                function gd(year, day, month) {
+                    return new Date(year, month - 1, day).getTime();
+                }
+                chartorder();
+
+                var graphArea2 = Morris.Area({
+                    element: 'hero-area',
+                    padding: 10,
                     behaveLikeLine: true,
-                    labels: ['đơn hàng','doanh số','lợi nhuận','số lượng']
+                    gridEnabled: false,
+                    gridLineColor: '#dddddd',
+                    axes: true,
+                    resize: true,
+                    smooth: true,
+                    pointSize: 0,
+                    lineWidth: 0,
+                    fillOpacity: 0.85,
+                    lineColors: ['#eb6f6f', '#926383', '#eb6f6f'],
+                    xkey: 'period',
+                    redraw: true,
+                    ykeys: ['order', 'sales', 'profit', 'quantity'],
+                    labels: ['đơn hàng', 'doanh số', 'lợi nhuận', 'số lượng'],
+                    pointSize: 2,
+                    hideHover: 'auto',
+                    resize: true
                 });
 
-                $('.btn_dashboard_filter').click(function(){
-                    var from_date = $('#datepicker').val();
-                    var to_date = $('#datepicker2').val();
+                function chartorder() {
                     var _token = $('input[name="_token"]').val();
                     $.ajax({
-                        url:"{{url('/filter-by-date')}}",
-                        method:"POST",
-                        dataType:"JSON",
-                        data:{from_date:from_date,to_date:to_date,_token:_token},
-                        success:function(data){
-                            chart.setData(data);
-                        }
-                    });
-
-                });
-
-                $('.dashboard-filter').change(function(){
-                    var dashboard_value = $(this).val();
-                    var _token = $('input[name="_token"]').val();
-                    $.ajax({
-                        url:"{{url('/dashboard-filter')}}",
-                        method:"POST",
-                        dataType:"JSON",
-                        data:{dashboard_value:dashboard_value,_token:_token},
-                        success:function(data){
-                            chart.setData(data);
-                        }
-                    });
-
-                });
-
-                function chart30daysorder(){
-                    var _token = $('input[name="_token"]').val();
-                    $.ajax({
-                        url:"{{url('/days-order')}}",
-                        method:"POST",
-                        dataType:"JSON",
-                        data:{_token:_token},
-                        success:function(data){
-                            chart.setData(data);
+                        url: "{{url('/days-order')}}",
+                        method: "POST",
+                        dataType: "JSON",
+                        data: {
+                            _token: _token
+                        },
+                        success: function(data) {
+                            graphArea2.setData(data);
                         }
                     });
                 }
 
-
             });
+        </script>
+
+        <script>
+            chart7daysorder();
+
+            var sevendays = Morris.Bar({
+                element: 'graph8',
+                xkey: 'period',
+                ykeys: ['order', 'sales', 'profit', 'quantity'],
+                labels: ['đơn hàng', 'doanh số', 'lợi nhuận', 'số lượng'],
+                xLabelAngle: 60
+            });
+
+            function chart7daysorder() {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{url('/7days-order')}}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        _token: _token
+                    },
+                    success: function(data) {
+                        sevendays.setData(data);
+                    }
+                });
+            }
+        </script>
+
+        <script>
+            chart365daysorder();
+            var year = Morris.Line({
+                element: 'graph9',
+                xkey: 'period',
+                ykeys: ['order', 'sales', 'profit', 'quantity'],
+                labels: ['đơn hàng', 'doanh số', 'lợi nhuận', 'số lượng'],
+                parseTime: false
+            });
+
+            function chart365daysorder() {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{url('/365days-order')}}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        _token: _token
+                    },
+                    success: function(data) {
+                        year.setData(data);
+                    }
+                });
+            }
+        </script>
+
+        <script>
+            chart30daysorder();
+            // This crosses a DST boundary in the UK.
+            var month = Morris.Area({
+                element: 'graph7',
+                xkey: 'period',
+                ykeys: ['order', 'sales', 'profit', 'quantity'],
+                labels: ['đơn hàng', 'doanh số', 'lợi nhuận', 'số lượng'],
+            });
+
+            function chart30daysorder() {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{url('/30days-order')}}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        _token: _token
+                    },
+                    success: function(data) {
+                        month.setData(data);
+                    }
+                });
+            }
         </script>
 
         <script type="text/javascript">

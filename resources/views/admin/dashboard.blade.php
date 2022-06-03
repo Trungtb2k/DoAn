@@ -1,43 +1,148 @@
 @extends('admin.admin_layout')
 @section('admin_content')
-<div class="container-fluid">
-    <style type="text/css">
-        p.title_thongke{
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
+<!-- //market-->
 
-    </style>
-    <div class="row">
-    <p class="title_thongke">Thống kê doanh số</p>
-    <form action="#" autocomplete="off" style="margin-left: 15%;">
+<!-- //market-->
+<form>
     @csrf
-        <div class="col-md-3" style="margin-right: 50px;">
-            <p>Từ ngày: <input type="text" id="datepicker" class="form-control"></p>
-            <button type="submit" class="btn btn-primary btn-sm btn_dashboard_filter" value="Lọc kết quả">
-                <span>Lọc kết quả</span>
-            </p>
-        </div>
-        <div class="col-md-3" style="margin-right: 50px;">
-            <p>Đến ngày: <input type="text" id="datepicker2" class="form-control"></p>
-        </div>
+    <div class="row">
+        <div class="panel-body">
+            <div class="col-md-12 w3ls-graph">
+                <!--agileinfo-grap-->
+                <div class="agileinfo-grap">
+                    <div class="agileits-box">
+                        <header class="agileits-box-header clearfix">
+                            <h3>Visitor Statistics</h3>
+                            <div class="toolbar">
 
-        <div class="col-md-3">
-            <p>
-                Lọc theo:
-                <select class="dashboard-filter form-control">
-                    <option>---Chọn---</option>
-                    <option value="7ngay">7 ngày qua</option>
-                    <option value="thangtruoc">Tháng trước</option>
-                    <option value="365ngayqua">Năm trước</option>
-                </select>
-            </p>
+
+                            </div>
+                        </header>
+                        <div class="agileits-box-body clearfix">
+                            <div id="hero-area"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--//agileinfo-grap-->
+
+            </div>
         </div>
-    </form>
-    <div class="col-md-12">
-        <div id="myfirstchart" style="height: 250px;"></div>
     </div>
-</div>
+</form>
+<div class="agil-info-calendar">
+    <!-- tasks -->
+    <div class="agile-last-grids">
+        <form>
+            @csrf
+            <div class="col-md-4 agile-last-left">
+                <div class="agile-last-grid">
+                    <div class="area-grids-heading">
+                        <h3>Monthly</h3>
+                    </div>
+                    <div id="graph7"></div>
 
-@endsection
+
+                </div>
+            </div>
+        </form>
+        <form>
+            @csrf
+            <div class="col-md-4 agile-last-left agile-last-middle">
+                <div class="agile-last-grid">
+                    <div class="area-grids-heading">
+                        <h3>Daily</h3>
+                    </div>
+                    <div id="graph8"></div>
+                </div>
+            </div>
+        </form>
+
+        <form>
+            @csrf
+            <div class="col-md-4 agile-last-left agile-last-right">
+                <div class="agile-last-grid">
+                    <div class="area-grids-heading">
+                        <h3>Yearly</h3>
+                    </div>
+                    <div id="graph9"></div>
+
+                </div>
+            </div>
+        </form>
+        <div class="clearfix"> </div>
+    </div>
+
+    <div class="agil-info-calendar">
+        <!-- tasks -->
+        <div class="agile-last-grids">
+
+            <div class="col-md-4 agile-last-left">
+                <div class="agile-last-grid">
+                    <div class="area-grids-heading">
+                        <h3>Sản phẩm bán chạy</h3>
+                    </div>
+                    <table class="table table-dark table-hover">
+
+                        <tbody>
+                            <tr>
+                                <td>John</td>
+                            </tr>
+                            <tr>
+                                <td>John</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+            </div>
+
+            <div class="col-md-4 agile-last-left agile-last-middle">
+                <div class="agile-last-grid">
+                    <div class="area-grids-heading">
+                        <h3>Sản phẩm xem nhiều</h3>
+                    </div>
+                    <table class="table table-dark table-hover">
+
+                        <tbody>
+                            <tr>
+                                <td>John</td>
+                            </tr>
+                            <tr>
+                                <td>John</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-4 agile-last-left agile-last-right">
+                <div class="agile-last-grid">
+                    <div class="area-grids-heading">
+                        <h3>Bài viết xem nhiều</h3>
+                    </div>
+                    <table class="table table-dark table-hover">
+
+                        <tbody>
+                            <tr>
+                                <td>iPhone 13 pro max</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>Oppo reno 6z</td>
+                                <td>10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+            <div class="clearfix"> </div>
+        </div>
+
+
+        <!-- //tasks -->
+        @endsection

@@ -154,8 +154,8 @@ Route::get('/tu-13-20-trieu', [CategoryProduct::class,'tu_13_20_trieu']);
 Route::get('/tren-20-trieu', [CategoryProduct::class,'tren_20_trieu']);
 
 
-Route::post('/filter-by-date',[AdminController::class,'filter_by_date']);
-Route::post('/dashboard-filter',[AdminController::class,'dashboard_filter']);
 Route::post('/days-order',[AdminController::class,'day_orders']);
-
+Route::post('/7days-order',[AdminController::class,'sevenday_orders']);
+Route::post('/365days-order',[AdminController::class,'year_orders']);
+Route::post('/30days-order',[AdminController::class,'month_orders']);
 
