@@ -137,6 +137,7 @@
 										</div><!-- End .accordion -->
                                         </form>
 
+
 		                				<button type="submit" name="redirect" class="btn btn-outline-primary-2 btn-order btn-block">
 		                					<span class="btn-text">Đặt hàng</span>
 		                					<span class="btn-hover-text">Tiến hành thanh toán</span>

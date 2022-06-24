@@ -27,7 +27,6 @@
     <link rel="stylesheet" href="{{asset('public/frontend/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/frontend/css/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{asset('public/frontend/css/magnific-popup.css')}}">
-    <link rel="stylesheet" href="{{asset('public/frontend/css/nouislider.css')}}">
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{asset('public/frontend/css/style.css')}}">
@@ -48,7 +47,7 @@
                 <div class="container">
                     <div class="header-left">
                         <div class="header-dropdown">
-                            <a href="#">Usd</a>
+                            <a href="#">VND</a>
                             <div class="header-menu">
                                 <ul>
                                     <li><a href="#">VND</a></li>
@@ -58,7 +57,7 @@
                         </div><!-- End .header-dropdown -->
 
                         <div class="header-dropdown">
-                            <a href="#">Eng</a>
+                            <a href="#">VN</a>
                             <div class="header-menu">
                                 <ul>
                                     <li><a href="#">English</a></li>
@@ -105,8 +104,8 @@
                                 <li>
                                     <a href="{{URL::to('/blog')}}" class="">Blog</a>
                                 </li>
-                                <li>
-                                    <a href="{{URL::to('/about')}}" class="">Về chúng tôi</a>
+                                 <li>
+                                    <a href="{{URL::to('/about')}}" class="">Giới thiệu</a>
                                 </li>
                                 <li>
                                     <a href="{{URL::to('/contact')}}" class="">Liên hệ</a>
@@ -251,7 +250,7 @@
 
                     </li>
                     <li>
-                        <a href="{{URL::to('/about')}}">Về chúng tôi</a>
+                        <a href="{{URL::to('/about')}}">Giới thiệu</a>
                     </li>
                     <li>
                         <a href="{{URL::to('/contact')}}">Liên hệ</a>
@@ -270,16 +269,13 @@
 
     <!-- Plugins JS File -->
     <script src="{{asset('public/frontend/js/jquery.min.js')}}"></script>
-    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="{{asset('public/frontend/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.hoverIntent.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.waypoints.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/superfish.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/owl.carousel.min.js')}}"></script>
-    <script src="{{asset('public/frontend/js/wNumb.js')}}"></script>
-    <script src="{{asset('public/frontend/js/bootstrap-input-spinner.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.magnific-popup.min.js')}}"></script>
-    <script src="{{asset('public/frontend/js/nouislider.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.elevateZoom.min.js')}}"></script>
     <!-- Main JS File -->
     <script src="{{asset('public/frontend/js/main.js')}}"></script>
@@ -355,7 +351,7 @@
                 var comment_date = new Date().toLocaleDateString();
                 var _token = $('input[name="_token"]').val();
                 if(product_id != '' && comment_name != '' && comment != '' && comment_phone.matches(/([0]\d{9,})/)){
-                        $.ajax({
+                    $.ajax({
                         url:"{{url('/send-comment')}}",
                         method:"POST",
                         data:{product_id:product_id, _token:_token,comment_name:comment_name,comment:comment,
@@ -366,7 +362,6 @@
                         }
                     });
                 }
-
             });
         });
     </script>
@@ -408,7 +403,7 @@
         });
     </script>
 
-    <script type="text/javascript">
+       <script type="text/javascript">
         function view(){
             if(localStorage.getItem('data')!=null){
                 var data = JSON.parse(localStorage.getItem('data'));
@@ -498,6 +493,15 @@
              }
              return false;
          });
+    </script>
+
+    <script type="text/javascript">
+        window.addEventListener( "pageshow", function ( event ) {
+            var historyTraversal = event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
+            if ( historyTraversal ) {
+                window.location.reload();
+            }
+        });
     </script>
 
 </body>

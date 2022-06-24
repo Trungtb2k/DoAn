@@ -68,7 +68,7 @@
 											</td>
                                             <?php
 
-                                                $mysqli = new mysqli('localhost','root','','molla');
+                                                $mysqli = new mysqli('103.97.125.253','qdjsageo_Molla','Trung0710','qdjsageo_Molla');
                                                 $memory = "select attr_name from tbl_attr where attr_id = ".$cart['attr_id'];
                                                 $result = $mysqli->query($memory);
                                                 $row = $result->fetch_assoc();

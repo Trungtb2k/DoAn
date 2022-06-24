@@ -59,6 +59,7 @@ class GalleryController extends Controller
         $gallery->delete();
     }
 
+
     public function update_gallery(Request $request){
         $get_image = $request->file('file');
         $gal_id = $request->gal_id;

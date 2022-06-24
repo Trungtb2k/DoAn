@@ -39,6 +39,11 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Giảm giá</label>
+                                    <input type="text" data-validation="number" name="product_discount" class="form-control" id="exampleInputEmail1" required>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="exampleInputPassword1">Hình ảnh</label>
                                     <input type="file" name="product_image" class="form-control" id="exampleInputEmail1">
                                 </div>

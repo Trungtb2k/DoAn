@@ -25,7 +25,18 @@ class AdminController extends Controller
 
     public function show_dashboard(){
         $this->AuthLogin();
-        return view('admin.dashboard');
+        $hot_product = DB::table('tbl_product')->where('product_status',0)
+        ->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('product_attr_status',0)->orderBy('product_sold','DESC')->limit(5)->get();
+
+        $hot_view_product = DB::table('tbl_product')->where('product_status',0)
+        ->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
+        ->where('product_attr_status',0)->orderBy('tbl_product.product_views','DESC')->limit(5)->get();
+
+        $hot_post = DB::table('tbl_post')->orderBy('post_views','DESC')->limit(5)->get();
+
+        return view('admin.dashboard')->with('hot_product',$hot_product)
+        ->with('hot_view_product',$hot_view_product)->with('hot_post',$hot_post);
     }
 
     public function dashboard(Request $request){

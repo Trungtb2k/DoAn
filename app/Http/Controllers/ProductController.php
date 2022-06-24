@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Gallery;
 use App\Models\Comment;
+use App\Models\Product;
 use Facade\Ignition\Tabs\Tab;
 use Illuminate\Support\Facades\File;
 
@@ -35,7 +36,7 @@ class ProductController extends Controller
         $this->AuthLogin();
         $list_product = DB::table('tbl_product')
         ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
-        ->join('tbl_brand','tbl_brand.brand_id','=','tbl_product.brand_id')->get();
+        ->join('tbl_brand','tbl_brand.brand_id','=','tbl_product.brand_id')->paginate(6);
         $manager_product = view('admin.product.list_product')->with('list_product',$list_product);
         return view('admin.admin_layout')->with('admin.product.list_product',$manager_product);
     }
@@ -47,6 +48,7 @@ class ProductController extends Controller
         $data['product_sold']=0;
         $data['product_content']=$request->product_content;
         $data['product_desc']=$request->product_desc;
+        $data['product_discount'] = $request->product_discount;
         $data['product_config']=$request->product_configuration;
         $data['product_status']=$request->product_status;
         $data['category_id']=$request->product_cate;
@@ -59,7 +61,7 @@ class ProductController extends Controller
         if($get_image){
             $get_name_image = $get_image->getClientOriginalExtension();
             $name_image = current(explode('.',$get_name_image));
-            $new_image = $name_image.rand(0,99).'.'.$get_name_image;
+            $new_image = $name_image.rand(0,9999999).'.'.$get_name_image;
             $get_image->move($path,$new_image);
             File::copy($path.$new_image,$path_gallery.$new_image);
             $data['product_image'] = $new_image;
@@ -108,6 +110,7 @@ class ProductController extends Controller
         $data['product_name']=$request->product_name;
         $data['product_quantity']=$request->product_quantity;
         $data['product_desc'] = $request->product_desc;
+        $data['product_discount'] = $request->product_discount;
         $data['product_content'] = $request->product_content;
         $data['product_config']=$request->product_configuration;
         $data['category_id'] = $request->product_cate;
@@ -118,7 +121,7 @@ class ProductController extends Controller
         if($get_image){
             $get_name_image = $get_image->getClientOriginalExtension();
             $name_image = current(explode('.',$get_name_image));
-            $new_image = $name_image.rand(0,99).'.'.$get_name_image;
+            $new_image = $name_image.rand(0,9999999).'.'.$get_name_image;
             $get_image->move('public/Upload/Product',$new_image);
             $data['product_image'] = $new_image;
             DB::table('tbl_product')->where('product_id',$product_id)->update($data);
@@ -134,9 +137,9 @@ class ProductController extends Controller
         return Redirect::to('list-product');
     }
 
-    public function list_comment(){
+     public function list_comment(){
         $this->AuthLogin();
-        $list_comment = DB::table('tbl_comment')->get();
+        $list_comment = DB::table('tbl_comment')->paginate(10);
         $manager_comment = view('admin.comment.list_comment')->with('list_comment',$list_comment);
         return view('admin.admin_layout')->with('admin.comment.list_comment',$manager_comment);
     }
@@ -167,6 +170,9 @@ class ProductController extends Controller
         $attr_name = DB::table('tbl_attr')->join('tbl_product_attr','tbl_attr.attr_id','=','tbl_product_attr.attr_id')
         ->where('tbl_product_attr.product_id',$product_id)->get();
 
+        $attr_name1 = DB::table('tbl_attr')->join('tbl_product_attr','tbl_attr.attr_id','=','tbl_product_attr.attr_id')
+        ->where('tbl_product_attr.product_id',$product_id)->limit(1)->get();
+
         $rate = DB::table('tbl_comment')->where('comment_product_id',$product_id)
         ->where('comment_status','1')->get();
 
@@ -176,25 +182,35 @@ class ProductController extends Controller
         ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
         ->join('tbl_brand','tbl_brand.brand_id','=','tbl_product.brand_id')
         ->where('tbl_product.product_id',$product_id)
+        ->where('tbl_product.product_quantity','>','0')
         ->where('tbl_product_attr.attr_id',$attr_id)->get();
 
         foreach($details_product as $key => $value){
-            $category_id = $value -> category_id;
+            $category_id = $value->category_id;
             $product_id = $value->product_id;
         }
 
         $gallery = Gallery::where('product_id',$product_id)->get();
+
+        $abc = Product::where('product_id',$product_id)->first();
+        $abc->product_views = $abc->product_views+1;
+        $abc->save();
+
 
         $related_product = DB::table('tbl_product_attr')
         ->join('tbl_product','tbl_product.product_id','=','tbl_product_attr.product_id')
         ->join('tbl_attr','tbl_attr.attr_id','=','tbl_product_attr.attr_id')
         ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
         ->join('tbl_brand','tbl_brand.brand_id','=','tbl_product.brand_id')
-        ->where('tbl_product.product_id',$product_id)
+        ->where('tbl_product_attr.product_attr_status',0)
+        ->where('tbl_product.product_quantity','>','0')
         ->where('tbl_category_product.category_id',$category_id)->whereNotIn('tbl_product.product_id',[$product_id])->limit(4)->get();
+
+
 
         return view('pages.product.show_details')->with('category',$cate_product)
         ->with('brand',$brand_product)->with('product_details',$details_product)->with('attr_name',$attr_name)
+        ->with('attr_name1',$attr_name1)
         ->with('related',$related_product)->with('gallery',$gallery)->with('rate',$rate);
     }
 
@@ -233,7 +249,6 @@ class ProductController extends Controller
         $star = $request->star;
         $comment_date = $request->comment_date;
 
-
         $comment = new Comment();
         $comment->comment_name = $comment_name;
         $comment->comment = $comment_content;
@@ -244,10 +259,5 @@ class ProductController extends Controller
         $comment->comment_status = 0;
 
         $comment->save();
-
     }
-
-    
-
-
 }

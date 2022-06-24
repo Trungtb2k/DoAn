@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -15,11 +16,11 @@ class HomeController extends Controller
 
         $list_product = DB::table('tbl_product')->where('product_status',0)
         ->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-        ->where('tbl_product_attr.product_attr_status',0)->orderBy('tbl_product.product_sold')->limit(6)->get();
+        ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_discount','>',0)->orderBy('tbl_product.product_sold')->limit(6)->get();
 
         $list_product1 = DB::table('tbl_product')->where('product_status',0)
         ->join('tbl_product_attr','tbl_product_attr.product_id','=','tbl_product.product_id')
-        ->where('tbl_product_attr.product_attr_status',0)->limit(8)->get();
+        ->where('tbl_product_attr.product_attr_status',0)->where('tbl_product.product_discount',0)->limit(8)->get();
 
         $post = DB::table('tbl_post')->orderBy('post_id','desc')->limit(3)->get();
 
@@ -57,4 +58,6 @@ class HomeController extends Controller
     public function error_page(){
         return view('error.404');
     }
+
+
 }

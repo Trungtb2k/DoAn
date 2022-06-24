@@ -32,6 +32,8 @@ Route::post('/search',[HomeController::class,'search']);
 Route::get('/about',[HomeController::class,'about']);
 Route::get('/contact',[HomeController::class,'contact']);
 
+
+
 //BackEnd
 Route::get('/Admin',[AdminController::class,'index']);
 Route::get('/dashboard',[AdminController::class,'show_dashboard']);

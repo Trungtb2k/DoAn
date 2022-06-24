@@ -26,7 +26,7 @@
                                             <h3 class="intro-subtitle text-black-50">Ưu đãi</h3><!-- End .h3 intro-subtitle -->
                                             <h1 class="intro-title text-dark">AirPods 2<p style="font-size: 20px;">2.999.000 đ</p></h1><!-- End .intro-title -->
 
-                                            <a href="category.html" class="btn btn-outline-dark">
+                                            <a href="http://www.molla.gq/product-details/product_id=39/attr_id=8" class="btn btn-outline-danger">
                                                 <span style="color: black">Xem ngay</span>
                                                 <i class="icon-long-arrow-right"></i>
                                             </a>
@@ -45,7 +45,7 @@
                                             <h3 class="intro-subtitle text-black-50">Deals and Promotions</h3><!-- End .h3 intro-subtitle -->
                                             <h1 class="intro-title text-dark">Echo Dot<br>3rd Gen</h1><!-- End .intro-title -->
 
-                                            <a href="category.html" class="btn btn-outline-dark">
+                                            <a href="category.html" class="btn btn-outline-danger">
                                                 <span style="color: black">Xem ngay</span>
                                                 <i class="icon-long-arrow-right"></i>
                                             </a>
@@ -67,9 +67,9 @@
                                             </a>
 
                                             <div class="banner-content">
-                                                <h4 class="banner-subtitle text-black"><a href="#">Featured</a></h4><!-- End .banner-subtitle -->
-                                                <h3 class="banner-title text-black"><a href="#">Apple Watch 4<br>Our Hottest Deals</a></h3><!-- End .banner-title -->
-                                                <a href="#" class="btn btn-outline-dark banner-link">Xem ngay<i class="icon-long-arrow-right"></i></a>
+                                                <h4 class="banner-subtitle text-black"><a href="#">Nổi bật</a></h4><!-- End .banner-subtitle -->
+                                                <h3 class="banner-title text-black"><a href="#">Apple Watch 4<br>Ưu đãi hấp dẫn</a></h3><!-- End .banner-title -->
+                                                <a href="#" class="btn btn-outline-primary banner-link"><span style="color: black">Xem ngay</span><i class="icon-long-arrow-right"></i></a>
                                             </div><!-- End .banner-content -->
                                         </div><!-- End .banner -->
                                     </div><!-- End .col-md-6 col-lg-12 -->
@@ -81,9 +81,9 @@
                                             </a>
 
                                             <div class="banner-content">
-                                                <h4 class="banner-subtitle text-black"><a href="#">Top Product</a></h4><!-- End .banner-subtitle -->
+                                                <h4 class="banner-subtitle text-black"><a href="#">Độc quyền</a></h4><!-- End .banner-subtitle -->
                                                 <h3 class="banner-title text-black"><a href="#">Edifier<br>Stereo Bluetooth</a></h3><!-- End .banner-title -->
-                                                <a href="#" class="btn btn-outline-dark banner-link">Xem ngay<i class="icon-long-arrow-right"></i></a>
+                                                <a href="#" class="btn btn-outline-primary banner-link"><span style="color: black">Xem ngay</span><i class="icon-long-arrow-right"></i></a>
                                             </div><!-- End .banner-content -->
                                         </div><!-- End .banner -->
                                     </div><!-- End .col-md-6 col-lg-12 -->
@@ -95,9 +95,9 @@
                                             </a>
 
                                             <div class="banner-content">
-                                                <h4 class="banner-subtitle text-black"><a href="#">Clearance</a></h4><!-- End .banner-subtitle -->
-                                                <h3 class="banner-title text-black"><a href="#">GoPro - Fusion 360<br>Save $70</a></h3><!-- End .banner-title -->
-                                                <a href="#" class="btn btn-outline-dark banner-link">Xem ngay<i class="icon-long-arrow-right"></i></a>
+                                                <h4 class="banner-subtitle text-black"><a href="#">Đặc biệt</a></h4><!-- End .banner-subtitle -->
+                                                <h3 class="banner-title text-black"><a href="#">GoPro - Fusion 360<br>Giảm 1.000.000 đ</a></h3><!-- End .banner-title -->
+                                                <a href="#" class="btn btn-outline-primary banner-link"><span style="color: black">Xem ngay</span><i class="icon-long-arrow-right"></i></a>
                                             </div><!-- End .banner-content -->
                                         </div><!-- End .banner -->
                                     </div><!-- End .col-md-6 col-lg-12 -->
@@ -169,7 +169,7 @@
                     <ul class="nav nav-pills justify-content-center" role="tablist">
                        @foreach($brand as $key => $brand)
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::to('/brand/'.$brand->brand_id)}}" role="tab" aria-controls="trendy-all-tab" aria-selected="true">{{($brand->brand_name)}}</a>
+                                <a class="nav-link" href="{{URL::to('/brand/brand_id='.$brand->brand_id)}}" role="tab" aria-controls="trendy-all-tab" aria-selected="true">{{($brand->brand_name)}}</a>
                             </li>
                        @endforeach
                     </ul>
@@ -211,10 +211,10 @@
                                 <input type="hidden" id="wishlist_attrid{{$value->product_id}}" value="{{$value->attr_id}}" class="cart_attr_id_{{$value->product_id}}">
                                 <input type="hidden" id="wishlist_productname{{$value->product_id}}" value="{{$value->product_name}}" class="cart_product_name_{{$value->product_id}}">
                                 <input type="hidden" id="wishlist_valueimage{{$value->product_id}}" value="{{$value->product_image}}" class="cart_product_image_{{$value->product_id}}">
-                                <input type="hidden" id="wishlist_productprice{{$value->product_id}}" value="{{$value->product_price}}" class="cart_product_price_{{$value->product_id}}">
+                                <input type="hidden" id="wishlist_productprice{{$value->product_id}}" value="{{$value->product_price-($value->product_discount*$value->product_price/100)}}" class="cart_product_price_{{$value->product_id}}">
                                 <input type="hidden" value="1" class="cart_product_qty_{{$value->product_id}}">
                                 <figure class="product-media">
-                                    <a id="wishlist_producturl{{$value->product_id}}" href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">
+                                    <a id="wishlist_producturl{{$value->product_id}}" href="{{URL::to('/product-details/product_id='.$value->product_id.'/attr_id='.$value->attr_id)}}">
                                         <img id="wishlist_productimage{{$value->product_id}}" src="public/upload/product/{{$value->product_image}}" alt="Product image" class="product-image">
                                     </a>
                                     <div class="product-action-vertical">
@@ -223,10 +223,25 @@
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">
-                                    <h3 class="product-title"><a href="{{URL::to('/product-details/'.$value->product_id.'/'.$value->attr_id)}}">{{($value->product_name)}}</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        {{number_format($value->product_price)}}đ
-                                    </div><!-- End .product-price -->
+                                    <h3 class="product-title"><a href="{{URL::to('/product-details/product_id='.$value->product_id.'/attr_id='.$value->attr_id)}}">{{($value->product_name)}}</a></h3><!-- End .product-title -->
+                                    <?php
+                                    if($value->product_discount == 0){
+                                        ?>
+                                            <div class="product-price" style="color: #c96;">
+                                                {{number_format($value->product_price)}}đ
+                                            </div><!-- End .product-price -->
+                                        <?php
+                                    }else{
+                                        ?>
+                                            <div class="product-pri" style="text-decoration-line:line-through;color: #a8afb7;">
+                                                {{number_format($value->product_price)}}đ
+                                            </div><!-- End .product-price -->
+                                            <div class="product-price" style="color: #c96;">
+                                                {{number_format($value->product_price-($value->product_discount*$value->product_price/100))}}đ
+                                            </div><!-- End .product-price -->
+                                        <?php
+                                    }
+                                    ?>
                                 </div><!-- End .product-body -->
                                 <div class="product-action">
                                     <a type="button" data-id_product="{{$value->product_id}}" class="btn-product btn-cart add-to-cart" name="add-to-cart"><span>Thêm vào giỏ hàng</span></a>
@@ -245,20 +260,56 @@
     		<div class="container categories pt-6">
         		<h2 class="title-lg text-center mb-4">Danh mục sản phẩm</h2><!-- End .title-lg text-center -->
                     <div class="row">
-                        @foreach($category as $key => $cate)
-                            <div class="col-6 col-lg-4">
-                                <div class="banner banner-display banner-link-anim">
-                                    <a href="#">
-                                        <img src="public/upload/category/{{$cate->category_image}}" alt="Banner" style="width: 376px;height: 260px;">
-                                    </a>
-                                    <div class="banner-content banner-content-center">
-                                        <h3 class="banner-title size-guide text-white bg-dark">{{($cate->category_name)}}</h3><!-- End .banner-title -->
-                                        <a href="{{URL::to('/shop')}}" class="btn btn-outline-white banner-link">Xem ngay<i class="icon-long-arrow-right"></i></a>
-                                    </div><!-- End .banner-content -->
-                                </div><!-- End .banner -->
-                            </div><!-- End .col-sm-6 col-lg-3 -->
-                        @endforeach
-                    </div><!-- End .row -->
+                    <div class="col-6 col-lg-4">
+                        <div class="banner banner-display banner-link-anim">
+                            <a href="#">
+                                <img src="https://cdn.shopify.com/s/files/1/0409/7245/products/whitegloss_e70d41e8-ef0d-47ee-bdf9-c8b60865e9a9_1800x1800.png?v=1632829122" style="margin-left: -25%;margin-right: 25%;width: auto !important;height: 540px !important;" alt="Banner">
+                            </a>
+
+                            <div class="banner-content banner-content-center">
+                                <h3 class="banner-title text-white"><a href="#">Điện thoại</a></h3><!-- End .banner-title -->
+                                <a href="{{URL::to('/category-product/category_id=16')}}" class="btn btn-outline-white banner-link">Mua ngay<i class="icon-long-arrow-right"></i></a>
+                            </div><!-- End .banner-content -->
+                        </div><!-- End .banner -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+                    <div class="col-6 col-lg-4 order-lg-last">
+                        <div class="banner banner-display banner-link-anim">
+                            <a href="#">
+                                <img src="https://images.unsplash.com/photo-1631863552122-3072cf599a46?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YXBwbGUlMjB3YXRjaCUyMHNlcmllcyUyMDV8ZW58MHx8MHx8&w=1000&q=80" style="margin-left: auto;margin-right:auto;width: 320px;height: 540px !important;" alt="Banner">
+                            </a>
+
+                            <div class="banner-content banner-content-center">
+                                <h3 class="banner-title text-white"><a href="#">Đồng hồ thông minh</a></h3><!-- End .banner-title -->
+                                <a href="{{URL::to('/category-product/category_id=17')}}" class="btn btn-outline-white banner-link">Mua ngay<i class="icon-long-arrow-right"></i></a>
+                            </div><!-- End .banner-content -->
+                        </div><!-- End .banner -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+                    <div class="col-sm-12 col-lg-4 banners-sm">
+                        <div class="row">
+                            <div class="banner banner-display banner-link-anim col-lg-12 col-6">
+                                <a href="#">
+                                    <img src="https://phucanhcdn.com/media/product/39332_tai_nghe_apple_airpod_pro_mwp22vn__tr____ng_1_4.jpg" alt="Banner" style="margin-left: auto;margin-right:auto;width: 260px !important;height: 260px !important;">
+                                </a>
+
+                                <div class="banner-content banner-content-center">
+                                    <h3 class="banner-title text-white"><a href="#">Tai nghe</a></h3><!-- End .banner-title -->
+                                    <a href="{{URL::to('/category-product/category_id=20')}}" class="btn btn-outline-white banner-link">Mua ngay<i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .banner-content -->
+                            </div><!-- End .banner -->
+
+                            <div class="banner banner-display banner-link-anim col-lg-12 col-6">
+                                <a href="#">
+                                    <img src="https://thegioiso365.vn/wp-content/uploads/2021/07/trang-1-1.jpg" alt="Banner" style="margin-left: auto;margin-right:auto;width: 260px !important;height: 260px !important;">
+                                </a>
+
+                                <div class="banner-content banner-content-center">
+                                    <h3 class="banner-title text-white"><a href="#">Laptop</a></h3><!-- End .banner-title -->
+                                    <a href="{{URL::to('/category-product/category_id=19')}}" class="btn btn-outline-white banner-link">Mua ngay<i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .banner-content -->
+                            </div><!-- End .banner -->
+                        </div>
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+                </div><!-- End .row -->
     		</div><!-- End .container -->
 
             <div class="mb-5"></div><!-- End .mb-6 -->
@@ -292,7 +343,7 @@
                                             <input type="hidden" value="{{$list->product_price}}" class="cart_product_price_{{$list->product_id}}">
                                             <input type="hidden" value="1" class="cart_product_qty_{{$list->product_id}}">
                                             <figure class="product-media">
-                                            <a href="{{URL::to('/product-details/'.$list->product_id.'/'.$list->attr_id)}}">
+                                            <a href="{{URL::to('/product-details/product_id='.$list->product_id.'/attr_id='.$list->attr_id)}}">
                                                 <img src="public/upload/product/{{$list->product_image}}" alt="Product image" class="product-image">
                                             </a>
                                             <div class="product-action-vertical">
@@ -302,8 +353,8 @@
 
                                             <input type="hidden" name="qty" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                             <div class="product-body">
-                                                <h3 class="product-title"><a href="{{URL::to('/product-details/'.$list->product_id.'/'.$list->attr_id)}}">{{($list->product_name)}}</a></h3><!-- End .product-title -->
-                                                <div class="product-price">
+                                                <h3 class="product-title"><a href="{{URL::to('/product-details/product_id='.$list->product_id.'/attr_id='.$list->attr_id)}}">{{($list->product_name)}}</a></h3><!-- End .product-title -->
+                                                <div class="product-price" style="color: #c96;">
                                                     {{number_format($list->product_price)}}đ
                                                 </div><!-- End .product-price -->
                                             </div><!-- End .product-body -->
@@ -392,14 +443,14 @@
                         @foreach($post as $ket => $post1)
                             <article class="entry entry-display">
                                 <figure class="entry-media">
-                                    <a href="single.html">
+                                    <a href="{{URL::to('/blog-details/'.$post1->post_slug)}}">
                                         <img  src="{{asset('public/upload/post/'.$post1->post_image)}}" alt="image desc">
                                     </a>
                                 </figure><!-- End .entry-media -->
 
                                 <div class="entry-body pb-4 text-center">
                                     <div class="entry-meta">
-                                        <a href="#">Nov 22, 2018</a>
+                                        <a href="{{URL::to('/blog-details/'.$post1->post_slug)}}">{{$post1->created_date}}</a>
                                     </div><!-- End .entry-meta -->
 
                                     <h3 class="entry-title">

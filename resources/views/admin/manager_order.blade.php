@@ -32,7 +32,26 @@
             <td>{{number_format($order->order_subtotal)}} đ</td>
             <td>{{number_format($order->order_discount)}} đ</td>
             <td>{{number_format($order->order_total)}} đ</td>
-            <td>{{$order->order_status}}</td>
+            @switch($order->order_status)
+                @case(0)
+                    <td>Đang xử lý</td>
+                    @break
+                @case(1)
+                    <td>Đã được xử lý</td>
+                    @break
+                @case(2)
+                    <td>Vận chuyển</td>
+                    @break
+                @case(3)
+                    <td>Từ chối nhận</td>
+                    @break
+                @case(4)
+                    <td>Hoàn lại</td>
+                    @break
+                @case(5)
+                    <td>Hoàn thành</td>
+                    @break
+            @endswitch
             <td>
               <a href="{{URL::to('/view-order/'.$order->order_id)}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i></a>
               <a onclick="return confirm('Bạn có muốn xóa ?')" href="{{URL::to('/delete-order/'.$order->order_id)}}" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>

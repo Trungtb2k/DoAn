@@ -127,6 +127,13 @@ class BlogController extends Controller
         $post =DB::table('tbl_post')->join('tbl_category_post','tbl_category_post.category_post_id','=','tbl_post.category_post_id')
         ->where('post_status',0)->where('post_slug',$post_slug)->get();
 
+        $post_id =DB::table('tbl_post')->join('tbl_category_post','tbl_category_post.category_post_id','=','tbl_post.category_post_id')
+        ->where('post_status',0)->where('post_slug',$post_slug)->value('post_id');
+
+        $abc = Post::where('post_id',$post_id)->first();
+        $abc->post_views=$abc->post_views+1;
+        $abc->save();
+
         $category_post_id =DB::table('tbl_post')->where('post_status',0)->where('post_slug',$post_slug)->value('category_post_id');
 
         $post_release = DB::table('tbl_post')->join('tbl_category_post','tbl_category_post.category_post_id','=','tbl_post.category_post_id')

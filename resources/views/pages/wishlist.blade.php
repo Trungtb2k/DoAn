@@ -29,7 +29,7 @@
 						</thead>
 
 						<tbody id="row_wishlist">
-						
+
 						</tbody>
 					</table><!-- End .table table-wishlist -->
 	            	<div class="wishlist-share">

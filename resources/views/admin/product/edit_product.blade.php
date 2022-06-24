@@ -40,6 +40,11 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Giảm giá</label>
+                                    <input type="text" name="product_discount" class="form-control" id="exampleInputEmail1" value="{{($pro->product_discount)}}">
+                                </div>
+
+                                <div class="form-group">
                                     <label for="exampleInputPassword1">Hình ảnh</label>
                                     <input type="file" name="product_image" class="form-control" id="exampleInputEmail1">
                                     <img src="{{URL::to('public/upload/product/'.$pro->product_image)}}" height="100px" width="100px">

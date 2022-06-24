@@ -26,8 +26,19 @@ class CheckoutController extends Controller
         }
     }
 
+    public function AuthCheckout()
+    {
+        $product = Session::get('cart');
+        if ($product) {
+            return Redirect::to('checkout');
+        } else {
+            return Redirect::to('Home')->send();
+        }
+    }
+
     public function checkout()
     {
+        $this->AuthCheckout();
         return view('pages.checkout.show_checkout');
     }
 
@@ -86,26 +97,28 @@ class CheckoutController extends Controller
             $order_d_data['product_sales_quantity'] = $v_content['product_qty'];
             $result = DB::table('tbl_order_details')->insert($order_d_data);
         }
-        $data[] = array("shipping_name" => $request->shipping_name, "shipping_phone" => $request->shipping_phone,
+        $data[] = array(
+            "shipping_name" => $request->shipping_name, "shipping_phone" => $request->shipping_phone,
             "shipping_address" => $request->shipping_address, "shipping_notes" => $request->shipping_notes,
-            "payment_method" => $request->payment_option);
+            "payment_method" => $request->payment_option
+        );
 
-        $data1[]= array("payment_method"=>$request->payment_option);
+        $data1[] = array("payment_method" => $request->payment_option);
 
-        if(Session::get('coupon')==true){
-            foreach(Session::get('coupon') as $key => $cou1){
+        if (Session::get('coupon') == true) {
+            foreach (Session::get('coupon') as $key => $cou1) {
                 $cou1[] = array(
                     'coupon_discount' => $cou1['coupon_discount']
                 );
             }
-        }else{
+        } else {
             $cou1[] = array('coupon_discount' => '0');
         }
 
         $to_email = $request->shipping_email;
-        if(Session::get('cart')==true){
-            foreach(Session::get('cart') as $key => $cart_mail){
-                $cart_array[]= array(
+        if (Session::get('cart') == true) {
+            foreach (Session::get('cart') as $key => $cart_mail) {
+                $cart_array[] = array(
                     'product_name' => $cart_mail['product_name'],
                     'product_price' => $cart_mail['product_price'],
                     'product_qty' => $cart_mail['product_qty']
@@ -113,7 +126,9 @@ class CheckoutController extends Controller
             }
         }
 
-        Mail::send('pages.mail.mail_order', ['data'=>$data,'data1'=>$data1,'cart_array'=>$cart_array,'cou1'=>$cou1], function ($message) use ($to_email) {
+
+
+        Mail::send('pages.mail.mail_order', ['data' => $data, 'data1' => $data1, 'cart_array' => $cart_array, 'cou1' => $cou1], function ($message) use ($to_email) {
             $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
             $tittle_mail = "Thông tin đơn đặt hàng ngày" . ' ' . $now;
             $message->to($to_email)->subject($tittle_mail);
@@ -122,86 +137,87 @@ class CheckoutController extends Controller
 
         Session::forget('coupon');
         Session::forget('cart');
+        Session::save();
 
 
         if ($data1['payment_method'] == 'Chuyển khoản') {
             return Redirect::to('/Home');
-        }elseif ($data1['payment_method'] == 'Thanh toán khi nhận hàng') {
+        } elseif ($data1['payment_method'] == 'Thanh toán khi nhận hàng') {
             return view('pages.checkout.handcash');
-        }elseif($data1['payment_method'] == 'VNPay'){
+        } elseif ($data1['payment_method'] == 'VNPay') {
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = "http://localhost:81/DoAn/";
-            $vnp_TmnCode = "KRPRKJAJ";//Mã website tại VNPAY
-            $vnp_HashSecret = "DNBLUUNEBSHZYRJIVEGBIFXIAXHAFVQE"; //Chuỗi bí mật
+        $vnp_Returnurl = "http://localhost:81/DoAn/";
+        $vnp_TmnCode = "KRPRKJAJ"; //Mã website tại VNPAY
+        $vnp_HashSecret = "DNBLUUNEBSHZYRJIVEGBIFXIAXHAFVQE"; //Chuỗi bí mật
 
-            $vnp_TxnRef = mt_rand(); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-            $vnp_OrderInfo = 'Test VNPAY';
-            $vnp_OrderType = 'billpayment';
-            $vnp_Amount = ($subtotal - $discount) * 100;
-            $vnp_Locale = 'vn';
-            $vnp_BankCode = 'NCB';
-            $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-            //Billing
-            $inputData = array(
-                "vnp_Version" => "2.1.0",
-                "vnp_TmnCode" => $vnp_TmnCode,
-                "vnp_Amount" => $vnp_Amount,
-                "vnp_Command" => "pay",
-                "vnp_CreateDate" => date('YmdHis'),
-                "vnp_CurrCode" => "VND",
-                "vnp_IpAddr" => $vnp_IpAddr,
-                "vnp_Locale" => $vnp_Locale,
-                "vnp_OrderInfo" => $vnp_OrderInfo,
-                "vnp_OrderType" => $vnp_OrderType,
-                "vnp_ReturnUrl" => $vnp_Returnurl,
-                "vnp_TxnRef" => $vnp_TxnRef
-            );
+        $vnp_TxnRef = mt_rand(); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_OrderInfo = 'Test VNPAY';
+        $vnp_OrderType = 'billpayment';
+        $vnp_Amount = ($subtotal - $discount) * 100;
+        $vnp_Locale = 'vn';
+        $vnp_BankCode = 'NCB';
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        //Billing
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef
+        );
 
-            if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-                $inputData['vnp_BankCode'] = $vnp_BankCode;
-            }
-            if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-                $inputData['vnp_Bill_State'] = $vnp_Bill_State;
-            }
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+        }
 
-            //var_dump($inputData);
-            ksort($inputData);
-            $query = "";
-            $i = 0;
-            $hashdata = "";
-            foreach ($inputData as $key => $value) {
-                if ($i == 1) {
-                    $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
-                } else {
-                    $hashdata .= urlencode($key) . "=" . urlencode($value);
-                    $i = 1;
-                }
-                $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        //var_dump($inputData);
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
             }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
 
-            $vnp_Url = $vnp_Url . "?" . $query;
-            if (isset($vnp_HashSecret)) {
-                $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
-                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
-            }
-            $returnData = array('code' => '00'
-                , 'message' => 'success'
-                , 'data' => $vnp_Url);
-                if (isset($_POST['redirect'])) {
-                    header('Location: ' . $vnp_Url);
-                    die();
-                } else {
-                    echo json_encode($returnData);
-                }
-                //vui lòng tham khảo thêm tại code demo
-            }
+        $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        }
+        $returnData = array(
+            'code' => '00', 'message' => 'success', 'data' => $vnp_Url
+        );
+        if (isset($_POST['redirect'])) {
+            header('Location: ' . $vnp_Url);
+            die();
+        } else {
+            echo json_encode($returnData);
+        }
+        //vui lòng tham khảo thêm tại code demo
+        }
     }
 
     public function manager_order()
     {
         $this->AuthLogin();
         $all_order = DB::table('tbl_order')->join('tbl_shipping', 'tbl_shipping.shipping_id', '=', 'tbl_order.shipping_id')
-            ->select('tbl_order.*', 'tbl_shipping.shipping_name')->get();
+            ->select('tbl_order.*', 'tbl_shipping.shipping_name')->paginate(8);
         $manager_order = view('admin.manager_order')->with('all_order', $all_order);
         return view('admin.admin_layout')->with('admin.manager_order', $manager_order);
     }
@@ -221,12 +237,12 @@ class CheckoutController extends Controller
             ->where('tbl_order.order_id', $orderId)->get();
 
         $order_by_Id1 = DB::table('tbl_order')
-        ->join('tbl_order_details', 'tbl_order_details.order_id', '=', 'tbl_order.order_id')
-        ->select('tbl_order.*', 'tbl_order_details.*')
-        ->where('tbl_order.order_id', $orderId)->limit(1)->get();
+            ->join('tbl_order_details', 'tbl_order_details.order_id', '=', 'tbl_order.order_id')
+            ->select('tbl_order.*', 'tbl_order_details.*')
+            ->where('tbl_order.order_id', $orderId)->limit(1)->get();
 
         $manager_order_by_Id = view('admin.view_order')->with('order_by_Id', $order_by_Id)
-        ->with('order_2', $order_2)->with('order_by_Id1', $order_by_Id1);
+            ->with('order_2', $order_2)->with('order_by_Id1', $order_by_Id1);
 
         return view('admin.admin_layout')->with('admin.view_order', $manager_order_by_Id);
     }
@@ -240,7 +256,8 @@ class CheckoutController extends Controller
         return Redirect::to('manager-order');
     }
 
-    public function update_order_qty(Request $request){
+    public function update_order_qty(Request $request)
+    {
         //update order status
         $data = $request->all();
         $order = Order::find($data['order_id']);
@@ -249,56 +266,55 @@ class CheckoutController extends Controller
 
         //order date
         $order_date = $order->order_date;
-        $statistic = Statistic::where('order_date',$order_date)->get();
-        if($statistic){
+        $statistic = Statistic::where('order_date', $order_date)->get();
+        if ($statistic) {
             $statistic_count = $statistic->count();
-        }else{
+        } else {
             $statistic_count = 0;
         }
 
-        if($order->order_status==5){
-            $total_order =0;
+        if ($order->order_status == 5) {
+            $total_order = 0;
             $sales = 0;
             $profit = 0;
             $quantity = 0;
             $product_price = 0;
-            foreach($data['order_product_id'] as $key=>$product_id){
+            foreach ($data['order_product_id'] as $key => $product_id) {
                 $product = Product::find($product_id);
                 $product_quantity = $product->product_quantity;
                 $product_sold = $product->product_sold;
 
-                foreach($data['order_attr_id'] as $key3=>$attr_id){
-                    if($key==$key3){
-                        $attr=DB::table('tbl_product_attr')->where('product_id',$product_id)->where('attr_id',$attr_id)->first();
+                foreach ($data['order_attr_id'] as $key3 => $attr_id) {
+                    if ($key == $key3) {
+                        $attr = DB::table('tbl_product_attr')->where('product_id', $product_id)->where('attr_id', $attr_id)->first();
                         $product_price = $attr->product_price;
                     }
-
                 }
                 $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
 
-                foreach($data['quantity'] as $key2=>$qty){
-                    if($key==$key2){
-                        $product_remain = $product_quantity-$qty;
-                        $product->product_quantity=$product_remain;
+                foreach ($data['quantity'] as $key2 => $qty) {
+                    if ($key == $key2) {
+                        $product_remain = $product_quantity - $qty;
+                        $product->product_quantity = $product_remain;
                         $product->product_sold = $product_sold + $qty;
                         $product->save();
 
                         //update doanh thu
-                        $quantity+=$qty;
-                        $total_order+=1;
-                        $sales+=$product_price*$qty;
-                        $profit = $sales*0.1;
+                        $quantity += $qty;
+                        $total_order += 1;
+                        $sales += $product_price * $qty;
+                        $profit = $sales * 0.1;
                     }
                 }
             }
-            if($statistic_count>0){
-                $statistic_update = Statistic::where('order_date',$order_date)->first();
+            if ($statistic_count > 0) {
+                $statistic_update = Statistic::where('order_date', $order_date)->first();
                 $statistic_update->sales = $statistic_update->sales + $sales;
                 $statistic_update->profit = $statistic_update->profit + $profit;
                 $statistic_update->quantity = $statistic_update->quantity + $quantity;
                 $statistic_update->total_order = $statistic_update->total_order + $total_order;
                 $statistic_update->save();
-            }else{
+            } else {
                 $statistic_new = new Statistic();
                 $statistic_new->order_date = $order_date;
                 $statistic_new->sales = $sales;
@@ -306,7 +322,6 @@ class CheckoutController extends Controller
                 $statistic_new->quantity = $quantity;
                 $statistic_new->total_order = $total_order;
                 $statistic_new->save();
-
             }
         }
     }

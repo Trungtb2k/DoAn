@@ -84,12 +84,12 @@
                     <table class="table table-dark table-hover">
 
                         <tbody>
-                            <tr>
-                                <td>John</td>
-                            </tr>
-                            <tr>
-                                <td>John</td>
-                            </tr>
+                            @foreach($hot_product as $key => $hot)
+                                <tr>
+                                    <td><a target="_blank" href="{{URL::to('/product-details/'.$hot->product_id.'/'.$hot->attr_id)}}">{{$hot->product_name}}</a></td>
+                                    <td>{{$hot->product_sold}}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -106,12 +106,12 @@
                     <table class="table table-dark table-hover">
 
                         <tbody>
-                            <tr>
-                                <td>John</td>
-                            </tr>
-                            <tr>
-                                <td>John</td>
-                            </tr>
+                            @foreach($hot_view_product as $key => $view_product)
+                                <tr>
+                                    <td><a target="_blank" href="{{URL::to('/product-details/'.$view_product->product_id.'/'.$view_product->attr_id)}}">{{$view_product->product_name}}</a></td>
+                                    <td>{{$view_product->product_views}}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -125,14 +125,12 @@
                     <table class="table table-dark table-hover">
 
                         <tbody>
-                            <tr>
-                                <td>iPhone 13 pro max</td>
-                                <td>30</td>
-                            </tr>
-                            <tr>
-                                <td>Oppo reno 6z</td>
-                                <td>10</td>
-                            </tr>
+                            @foreach($hot_post as $key => $post)
+                                <tr>
+                                    <td><a href="{{URL::to('/blog-details/'.$post->post_slug)}}"><input value="{{$post->post_title}}" disabled></input></a></td>
+                                    <td>{{$post->post_views}}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 
